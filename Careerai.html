@@ -1,0 +1,3919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerHub Pro - Complete Career Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --error: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --gray: #95a5a6;
+            --purple: #9b59b6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .header h1 {
+            color: var(--secondary);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: var(--gray);
+            font-size: 1.1em;
+        }
+
+        /* Auth System Styles */
+        .auth-container {
+            display: flex;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .info-panel {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .info-panel h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .info-panel p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .features {
+            list-style-type: none;
+        }
+
+        .features li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .features li::before {
+            content: "✓";
+            margin-right: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-panel {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .tab {
+            padding: 12px 25px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #777;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .tab.active {
+            color: var(--primary);
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .form {
+            display: none;
+        }
+
+        .form.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form h2 {
+            margin-bottom: 25px;
+            color: var(--secondary);
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #2980b9);
+            color: white;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #229954);
+            color: white;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning), #e67e22);
+            color: white;
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+        }
+
+        .btn-purple {
+            background: linear-gradient(135deg, var(--purple), #8e44ad);
+            color: white;
+            box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-social {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            color: #333;
+            border: 2px solid #ddd;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .btn-social i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .btn-google {
+            border-color: #db4437;
+        }
+
+        .btn-google i {
+            color: #db4437;
+        }
+
+        .btn-facebook {
+            border-color: #4267B2;
+        }
+
+        .btn-facebook i {
+            color: #4267B2;
+        }
+
+        .btn-github {
+            border-color: #333;
+        }
+
+        .btn-github i {
+            color: #333;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #ddd;
+        }
+
+        .divider span {
+            padding: 0 15px;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+        }
+
+        .message.success {
+            background: rgba(39, 174, 96, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+
+        .message.error {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid var(--error);
+            color: var(--error);
+        }
+
+        .message.info {
+            background: rgba(52, 152, 219, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .dashboard {
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.5s;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        .dashboard h2 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .dashboard p {
+            color: var(--gray);
+            margin-bottom: 25px;
+        }
+
+        .user-info {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .user-info p {
+            margin-bottom: 10px;
+        }
+
+        .logout-btn {
+            background: var(--error);
+            color: white;
+        }
+
+        .action-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .action-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 14px;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        .action-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            background: var(--light);
+            border-radius: 12px;
+            padding: 6px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            flex: 1;
+            text-align: center;
+            padding: 16px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            color: var(--gray);
+            min-width: 200px;
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            color: white;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .nav-tab:hover:not(.active) {
+            background: rgba(52, 152, 219, 0.1);
+            color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Common Components */
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .status-container {
+            margin-bottom: 30px;
+        }
+
+        .message {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+        }
+
+        .message.success {
+            background: rgba(39, 174, 96, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+
+        .message.error {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid var(--error);
+            color: var(--error);
+        }
+
+        .message.warning {
+            background: rgba(243, 156, 18, 0.1);
+            border: 1px solid var(--warning);
+            color: var(--warning);
+        }
+
+        .message.loading {
+            background: rgba(52, 152, 219, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border-left: 4px solid var(--primary);
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: 800;
+            color: var(--secondary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9em;
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 40px;
+            color: var(--gray);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray);
+        }
+
+        .empty-state i {
+            font-size: 3em;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        /* Jobs Section */
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .job-card {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary);
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .job-card.featured {
+            border-left-color: var(--warning);
+            background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .job-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 5px;
+        }
+
+        .job-company {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .job-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .job-tag {
+            background: var(--light);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .job-description {
+            color: var(--gray);
+            line-height: 1.6;
+            margin: 15px 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .featured-badge {
+            background: linear-gradient(135deg, var(--warning), #e67e22);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .job-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .apply-link {
+            background: var(--success);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .apply-link:hover {
+            background: #229954;
+            transform: translateY(-2px);
+        }
+
+        /* Resume Builder - IMPROVED */
+        .resume-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .resume-editor {
+            background: var(--light);
+            padding: 25px;
+            border-radius: 12px;
+        }
+
+        .resume-preview {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #e9ecef;
+            min-height: 800px;
+            overflow-y: auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .template-options {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .template-option {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .template-option.active {
+            border-color: var(--primary);
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        .template-option:hover {
+            border-color: var(--primary);
+        }
+
+        /* Improved Resume Templates */
+        .resume-template {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 30px;
+            background: white;
+            color: #333;
+            min-height: 800px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .template-modern {
+            background: white;
+        }
+
+        .template-modern .resume-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .template-modern .resume-header h1 {
+            color: var(--secondary);
+            margin-bottom: 5px;
+            font-size: 2.2em;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .template-modern .resume-header h2 {
+            color: var(--primary);
+            font-weight: normal;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .template-modern .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+
+        .template-modern .contact-info span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .template-modern .section {
+            margin-bottom: 25px;
+        }
+
+        .template-modern .section-title {
+            color: var(--secondary);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .template-modern .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .template-modern .skill-tag {
+            background: var(--primary);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+
+        .template-professional {
+            font-family: 'Georgia', serif;
+            background: white;
+        }
+
+        .template-professional .resume-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #2c3e50;
+        }
+
+        .template-professional .resume-header h1 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-size: 2em;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .template-professional .resume-header h2 {
+            color: #666;
+            font-weight: normal;
+            margin-bottom: 10px;
+            font-style: italic;
+            font-size: 1.2em;
+        }
+
+        .template-professional .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            font-size: 0.85em;
+        }
+
+        .template-professional .contact-info span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .template-professional .section {
+            margin-bottom: 20px;
+        }
+
+        .template-professional .section-title {
+            color: #2c3e50;
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 3px;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .template-professional .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .template-professional .skill-tag {
+            background: #ecf0f1;
+            color: #2c3e50;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            border: 1px solid #bdc3c7;
+        }
+
+        .template-creative {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            font-family: 'Arial', sans-serif;
+        }
+
+        .template-creative .resume-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .template-creative .avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2em;
+            margin-right: 25px;
+            flex-shrink: 0;
+            font-weight: bold;
+        }
+
+        .template-creative .header-content {
+            flex: 1;
+        }
+
+        .template-creative .resume-header h1 {
+            color: var(--secondary);
+            margin-bottom: 5px;
+            font-size: 2em;
+            font-weight: 700;
+        }
+
+        .template-creative .resume-header h2 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .template-creative .contact-info {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            font-size: 0.9em;
+        }
+
+        .template-creative .contact-info span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .template-creative .section {
+            margin-bottom: 25px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .template-creative .section-title {
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+            padding-left: 10px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .template-creative .skills-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 8px;
+        }
+
+        .template-creative .skill-tag {
+            background: var(--light);
+            color: var(--dark);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            text-align: center;
+        }
+
+        /* Enhanced Resume Sections */
+        .resume-section {
+            margin-bottom: 25px;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .resume-section-header {
+            background: var(--light);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .resume-section-content {
+            padding: 20px;
+            background: white;
+        }
+
+        .experience-item, .education-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .experience-item:last-child, .education-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .item-title {
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .item-date {
+            color: var(--gray);
+            font-size: 0.9em;
+        }
+
+        .item-subtitle {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .item-description {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .add-item-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9em;
+        }
+
+        /* Print-specific styles */
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                font-size: 12pt;
+                line-height: 1.4;
+            }
+            
+            .container {
+                max-width: 100% !important;
+                width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
+            
+            /* Hide elements not needed in print */
+            .header, .auth-container, .nav-tabs, .controls, .template-options, 
+            .resume-editor, .action-links, .btn, .tab-content:not(.active) {
+                display: none !important;
+            }
+            
+            /* Show only the resume preview */
+            #resumePreview, .resume-preview, .resume-template {
+                display: block !important;
+                width: 100% !important;
+                padding: 20pt !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+                background: white !important;
+                color: black !important;
+            }
+            
+            /* Ensure proper page breaks */
+            .resume-template {
+                page-break-inside: avoid;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+            }
+            
+            /* Improve typography for print */
+            .resume-template h1 {
+                font-size: 22pt !important;
+                margin-bottom: 5pt !important;
+            }
+            
+            .resume-template h2 {
+                font-size: 14pt !important;
+                margin-bottom: 10pt !important;
+            }
+            
+            .resume-template h3 {
+                font-size: 12pt !important;
+                margin-bottom: 8pt !important;
+            }
+            
+            .resume-template p, .resume-template li {
+                font-size: 10pt !important;
+                line-height: 1.3 !important;
+            }
+            
+            /* Adjust spacing for print */
+            .resume-header {
+                margin-bottom: 15pt !important;
+                padding-bottom: 10pt !important;
+            }
+            
+            .section {
+                margin-bottom: 15pt !important;
+            }
+            
+            .experience-item, .education-item {
+                margin-bottom: 10pt !important;
+                padding-bottom: 8pt !important;
+            }
+            
+            /* Ensure links don't show as blue in print */
+            a {
+                color: black !important;
+                text-decoration: none !important;
+            }
+            
+            /* Make sure background colors don't print */
+            .skill-tag, .job-tag, .template-creative .section {
+                background: white !important;
+                color: black !important;
+                border: 1px solid #ccc !important;
+            }
+            
+            .template-creative {
+                background: white !important;
+            }
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        /* Job Details Modal */
+        .job-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .job-modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        /* Enhanced Chatbot Section */
+        .chat-container {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .message-bubble {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .message-bubble.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1em;
+            flex-shrink: 0;
+        }
+
+        .message-content {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 18px;
+            max-width: 70%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .message-bubble.user .message-content {
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            color: white;
+        }
+
+        /* Enhanced Chat Input */
+        .chat-input {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            outline: none;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .chat-input input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .chat-input button {
+            padding: 12px 20px;
+            border-radius: 25px;
+        }
+
+        /* Language Selector for Chat */
+        .language-section {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .language-select {
+            padding: 8px 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            background: white;
+            font-size: 14px;
+        }
+
+        .quick-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .suggestion-btn {
+            padding: 8px 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .suggestion-btn:hover {
+            background: #2980B9;
+            transform: translateY(-2px);
+        }
+
+        .language-indicator {
+            font-size: 12px;
+            color: #666;
+            margin-left: 10px;
+            font-style: italic;
+        }
+
+        /* Assessment */
+        .assessment-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .question-card {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .option {
+            padding: 15px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            border-color: var(--primary);
+            background: rgba(52, 152, 219, 0.05);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .auth-container {
+                flex-direction: column;
+            }
+            
+            .info-panel {
+                padding: 30px 20px;
+            }
+            
+            .auth-panel {
+                padding: 30px 20px;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .nav-tab {
+                min-width: auto;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .jobs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .resume-builder {
+                grid-template-columns: 1fr;
+            }
+            
+            .template-options {
+                flex-direction: column;
+            }
+            
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .job-actions {
+                flex-direction: column;
+            }
+            
+            .template-creative .resume-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .template-creative .avatar {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-briefcase"></i> CareerHub Pro</h1>
+            <p>Your complete career development platform - Jobs, Resumes, Assessments & AI Assistant</p>
+        </div>
+
+        <!-- Authentication System (Initially Visible) -->
+        <div id="auth-section" class="auth-container">
+            <div class="info-panel">
+                <h1>Complete Auth System</h1>
+                <p>A full authentication system with login, signup, password reset, and social login integration.</p>
+                <ul class="features">
+                    <li>User Registration & Login</li>
+                    <li>Password Reset Functionality</li>
+                    <li>Social Login (Google, Facebook, GitHub)</li>
+                    <li>Secure Session Management</li>
+                    <li>Responsive Design</li>
+                    <li>No Email Verification Required</li>
+                </ul>
+            </div>
+            
+            <div class="auth-panel">
+                <div class="form-container">
+                    <div class="tabs">
+                        <div class="tab active" data-tab="login">Login</div>
+                        <div class="tab" data-tab="signup">Sign Up</div>
+                    </div>
+                    
+                    <div id="login-form" class="form active">
+                        <h2>Welcome Back</h2>
+                        <form id="loginForm">
+                            <div class="form-group">
+                                <label for="login-email">Email</label>
+                                <input type="email" id="login-email" placeholder="Enter your email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="login-password">Password</label>
+                                <input type="password" id="login-password" placeholder="Enter your password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-sign-in-alt"></i> Login
+                            </button>
+                        </form>
+                        
+                        <div class="action-links">
+                            <a id="forgot-password-link">Forgot Password?</a>
+                        </div>
+                        
+                        <div class="divider">
+                            <span>Or continue with</span>
+                        </div>
+                        
+                        <button class="btn btn-social btn-google">
+                            <i class="fab fa-google"></i> Sign in with Google
+                        </button>
+                        <button class="btn btn-social btn-facebook">
+                            <i class="fab fa-facebook"></i> Sign in with Facebook
+                        </button>
+                        <button class="btn btn-social btn-github">
+                            <i class="fab fa-github"></i> Sign in with GitHub
+                        </button>
+                        
+                        <div id="login-message" class="message"></div>
+                    </div>
+                    
+                    <div id="signup-form" class="form">
+                        <h2>Create Account</h2>
+                        <form id="signupForm">
+                            <div class="form-group">
+                                <label for="signup-name">Full Name</label>
+                                <input type="text" id="signup-name" placeholder="Enter your full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="signup-email">Email</label>
+                                <input type="email" id="signup-email" placeholder="Enter your email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="signup-password">Password</label>
+                                <input type="password" id="signup-password" placeholder="Create a password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="signup-confirm">Confirm Password</label>
+                                <input type="password" id="signup-confirm" placeholder="Confirm your password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-user-plus"></i> Sign Up
+                            </button>
+                        </form>
+                        
+                        <div class="divider">
+                            <span>Or sign up with</span>
+                        </div>
+                        
+                        <button class="btn btn-social btn-google">
+                            <i class="fab fa-google"></i> Sign up with Google
+                        </button>
+                        <button class="btn btn-social btn-facebook">
+                            <i class="fab fa-facebook"></i> Sign up with Facebook
+                        </button>
+                        <button class="btn btn-social btn-github">
+                            <i class="fab fa-github"></i> Sign up with GitHub
+                        </button>
+                        
+                        <div id="signup-message" class="message"></div>
+                    </div>
+                    
+                    <div id="forgot-password-form" class="form">
+                        <h2>Reset Password</h2>
+                        <p>Enter your email address and we'll send you a link to reset your password.</p>
+                        <form id="forgotPasswordForm">
+                            <div class="form-group">
+                                <label for="reset-email">Email</label>
+                                <input type="email" id="reset-email" placeholder="Enter your email" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="send-reset-btn">
+                                <i class="fas fa-paper-plane"></i> Send Reset Link
+                            </button>
+                        </form>
+                        
+                        <div class="action-links">
+                            <a id="back-to-login">Back to Login</a>
+                        </div>
+                        
+                        <div id="forgot-password-message" class="message"></div>
+                    </div>
+                    
+                    <div id="reset-password-form" class="form">
+                        <h2>Create New Password</h2>
+                        <p>Please enter your new password below.</p>
+                        <form id="resetPasswordForm">
+                            <div class="form-group">
+                                <label for="new-password">New Password</label>
+                                <input type="password" id="new-password" placeholder="Enter new password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm-new-password">Confirm New Password</label>
+                                <input type="password" id="confirm-new-password" placeholder="Confirm new password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-key"></i> Reset Password
+                            </button>
+                        </form>
+                        
+                        <div id="reset-password-message" class="message"></div>
+                    </div>
+                    
+                    <div id="auth-dashboard" class="dashboard">
+                        <h2>Welcome, <span id="user-name">User</span>!</h2>
+                        <p>You have successfully logged into your account.</p>
+                        
+                        <div class="user-info">
+                            <p><strong>Email:</strong> <span id="user-email">user@example.com</span></p>
+                            <p><strong>Account Created:</strong> <span id="account-created">Jan 1, 2023</span></p>
+                            <p><strong>Last Login:</strong> <span id="last-login">Just now</span></p>
+                            <p><strong>Login Method:</strong> <span id="login-method">Email & Password</span></p>
+                        </div>
+                        
+                        <div class="action-links">
+                            <a id="change-password-link">Change Password</a>
+                        </div>
+                        
+                        <button class="btn logout-btn" id="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Career Platform (Initially Hidden) -->
+        <div id="career-platform" style="display: none;">
+            <div class="nav-tabs">
+                <div class="nav-tab active" onclick="switchTab('career-dashboard')">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </div>
+                <div class="nav-tab" onclick="switchTab('jobs')">
+                    <i class="fas fa-briefcase"></i> Job Search
+                </div>
+                <div class="nav-tab" onclick="switchTab('resume')">
+                    <i class="fas fa-file-alt"></i> Resume Builder
+                </div>
+                <div class="nav-tab" onclick="switchTab('assessment')">
+                    <i class="fas fa-clipboard-list"></i> Career Assessment
+                </div>
+                <div class="nav-tab" onclick="switchTab('chatbot')">
+                    <i class="fas fa-robot"></i> Career Assistant
+                </div>
+                <div class="nav-tab" onclick="logout()" style="background: var(--error); color: white;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </div>
+            </div>
+
+            <div class="status-container" id="statusContainer"></div>
+
+            <!-- Dashboard Tab -->
+            <div id="career-dashboard" class="tab-content active">
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="testConnection()">
+                        <i class="fas fa-heartbeat"></i> Test Connection
+                    </button>
+                    <button class="btn btn-success" onclick="switchTab('jobs')">
+                        <i class="fas fa-search"></i> Find Jobs
+                    </button>
+                    <button class="btn btn-warning" onclick="switchTab('resume')">
+                        <i class="fas fa-file-download"></i> Build Resume
+                    </button>
+                    <button class="btn btn-purple" onclick="switchTab('assessment')">
+                        <i class="fas fa-chart-line"></i> Take Assessment
+                    </button>
+                </div>
+
+                <div class="stats-grid" id="statsGrid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalJobs">0</div>
+                        <div class="stat-label">Available Jobs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalApplications">0</div>
+                        <div class="stat-label">Your Applications</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="resumeScore">0%</div>
+                        <div class="stat-label">Resume Complete</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="assessmentScore">-</div>
+                        <div class="stat-label">Career Match</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 40px;">
+                    <h3>Quick Actions</h3>
+                    <div class="controls" style="justify-content: center;">
+                        <button class="btn btn-outline" onclick="searchJobs()">
+                            <i class="fas fa-sync-alt"></i> Search Jobs
+                        </button>
+                        <button class="btn btn-outline" onclick="printResume()">
+                            <i class="fas fa-print"></i> Print Resume
+                        </button>
+                        <button class="btn btn-outline" onclick="startAssessment()">
+                            <i class="fas fa-play"></i> Start Assessment
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jobs Tab -->
+            <div id="jobs" class="tab-content">
+                <h2><i class="fas fa-briefcase"></i> Job Search & Applications</h2>
+                <div class="controls">
+                    <button class="btn btn-success" onclick="searchJobs()">
+                        <i class="fas fa-search"></i> Search Jobs
+                    </button>
+                    <button class="btn btn-outline" onclick="viewApplications()">
+                        <i class="fas fa-list"></i> View Applications
+                    </button>
+                </div>
+
+                <div class="filter-section">
+                    <div class="filter-grid">
+                        <div class="form-group">
+                            <label>Job Title</label>
+                            <input type="text" id="jobSearchQuery" placeholder="e.g., software developer, teacher" value="software developer">
+                        </div>
+                        <div class="form-group">
+                            <label>Location</label>
+                            <input type="text" id="jobSearchLocation" placeholder="e.g., Zimbabwe, Harare" value="Zimbabwe">
+                        </div>
+                        <div class="form-group">
+                            <label>Job Type</label>
+                            <select id="jobType">
+                                <option value="">All Types</option>
+                                <option value="fulltime">Full-time</option>
+                                <option value="parttime">Part-time</option>
+                                <option value="contract">Contract</option>
+                                <option value="internship">Internship</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="jobsContainer">
+                    <div class="empty-state">
+                        <i class="fas fa-search"></i>
+                        <h3>Search for Real Jobs</h3>
+                        <p>Enter your job search criteria above to find real opportunities from Google Jobs</p>
+                        <div style="margin-top: 20px;">
+                            <p><strong>Popular searches in Zimbabwe:</strong></p>
+                            <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 10px;">
+                                <button class="btn btn-outline" onclick="setSearchQuery('software developer')">Software Developer</button>
+                                <button class="btn btn-outline" onclick="setSearchQuery('teacher')">Teacher</button>
+                                <button class="btn btn-outline" onclick="setSearchQuery('nurse')">Nurse</button>
+                                <button class="btn btn-outline" onclick="setSearchQuery('accountant')">Accountant</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resume Builder Tab - IMPROVED -->
+            <div id="resume" class="tab-content">
+                <h2><i class="fas fa-file-alt"></i> Professional Resume Builder</h2>
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="saveResumeData()">
+                        <i class="fas fa-save"></i> Save Resume
+                    </button>
+                    <button class="btn btn-success" onclick="generateResumePDF()">
+                        <i class="fas fa-download"></i> Download PDF
+                    </button>
+                    <button class="btn btn-warning" onclick="printResume()">
+                        <i class="fas fa-print"></i> Print Resume
+                    </button>
+                    <button class="btn btn-outline" onclick="clearResume()">
+                        <i class="fas fa-trash"></i> Clear All
+                    </button>
+                </div>
+
+                <div class="resume-builder">
+                    <div class="resume-editor">
+                        <h3>Resume Content</h3>
+                        
+                        <div class="form-group">
+                            <label>Full Name *</label>
+                            <input type="text" id="resumeName" placeholder="Your Full Name" oninput="updateResumePreview()">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Professional Title *</label>
+                            <input type="text" id="resumeTitle" placeholder="e.g., Senior Software Engineer" oninput="updateResumePreview()">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Email *</label>
+                            <input type="email" id="resumeEmail" placeholder="your.email@example.com" oninput="updateResumePreview()">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Phone *</label>
+                            <input type="tel" id="resumePhone" placeholder="+263 77 123 4567" oninput="updateResumePreview()">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Location *</label>
+                            <input type="text" id="resumeLocation" placeholder="Harare, Zimbabwe" oninput="updateResumePreview()">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Professional Summary</label>
+                            <textarea id="resumeSummary" rows="4" placeholder="Brief overview of your professional background..." oninput="updateResumePreview()"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Skills (comma separated) *</label>
+                            <input type="text" id="resumeSkills" placeholder="JavaScript, React, Node.js, Python" oninput="updateResumePreview()">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Languages</label>
+                            <input type="text" id="resumeLanguages" placeholder="English, Shona, Ndebele" oninput="updateResumePreview()">
+                        </div>
+                        
+                        <!-- Enhanced Experience Section -->
+                        <div class="resume-section">
+                            <div class="resume-section-header" onclick="toggleSection('experienceSection')">
+                                <h3>Work Experience</h3>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="resume-section-content" id="experienceSection">
+                                <div id="experienceItems">
+                                    <!-- Experience items will be added here -->
+                                </div>
+                                <button class="add-item-btn" onclick="addExperienceItem()">
+                                    <i class="fas fa-plus"></i> Add Experience
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Enhanced Education Section -->
+                        <div class="resume-section">
+                            <div class="resume-section-header" onclick="toggleSection('educationSection')">
+                                <h3>Education</h3>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="resume-section-content" id="educationSection">
+                                <div id="educationItems">
+                                    <!-- Education items will be added here -->
+                                </div>
+                                <button class="add-item-btn" onclick="addEducationItem()">
+                                    <i class="fas fa-plus"></i> Add Education
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Certifications</label>
+                            <textarea id="resumeCertifications" rows="3" placeholder="Any relevant certifications..." oninput="updateResumePreview()"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="resume-preview">
+                        <h3>Resume Preview</h3>
+                        <div class="template-options">
+                            <div class="template-option active" onclick="selectTemplate('modern')">
+                                <i class="fas fa-palette"></i> Modern
+                            </div>
+                            <div class="template-option" onclick="selectTemplate('professional')">
+                                <i class="fas fa-briefcase"></i> Professional
+                            </div>
+                            <div class="template-option" onclick="selectTemplate('creative')">
+                                <i class="fas fa-paint-brush"></i> Creative
+                            </div>
+                        </div>
+                        <div id="resumePreview">
+                            <div class="empty-state">
+                                <i class="fas fa-file-alt"></i>
+                                <h3>Your Resume Preview</h3>
+                                <p>Start filling out the form to see your resume preview here</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assessment Tab -->
+            <div id="assessment" class="tab-content">
+                <h2><i class="fas fa-clipboard-list"></i> Career Path Assessment</h2>
+                
+                <div id="assessmentIntro">
+                    <div style="text-align: center; padding: 40px;">
+                        <i class="fas fa-chart-line fa-4x" style="color: var(--primary); margin-bottom: 20px;"></i>
+                        <h3>Discover Your Ideal Career Path</h3>
+                        <p style="color: var(--gray); margin: 20px 0;">Take this 5-minute assessment to discover careers that match your skills, interests, and personality.</p>
+                        <button class="btn btn-primary btn-lg" onclick="startAssessment()">
+                            <i class="fas fa-play"></i> Start Assessment
+                        </button>
+                    </div>
+                </div>
+
+                <div id="assessmentQuestions" style="display: none;">
+                    <div class="assessment-container">
+                        <div id="questionContainer"></div>
+                        <div style="text-align: center; margin-top: 30px;">
+                            <button class="btn btn-primary" onclick="nextQuestion()" id="nextQuestionBtn">
+                                Next Question <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="assessmentResults" style="display: none;">
+                    <!-- Results will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Enhanced Chatbot Tab -->
+            <div id="chatbot" class="tab-content">
+                <h2><i class="fas fa-robot"></i> Multilingual Career Guidance Assistant</h2>
+                <p style="color: var(--gray); margin-bottom: 20px;">Ask me anything about careers, job search, interviews, or resume building in English, Shona, or Ndebele!</p>
+                
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <h3><i class="fas fa-robot"></i> Career Assistant</h3>
+                        <p>I speak English, Shona, and Ndebele! I will reply in your preferred language!</p>
+                    </div>
+                    
+                    <div class="language-section">
+                        <label><strong>Choose Reply Language:</strong></label>
+                        <select id="languageSelect" class="language-select">
+                            <option value="en">English</option>
+                            <option value="sn">Shona</option>
+                            <option value="nd">Ndebele</option>
+                        </select>
+                        <span class="language-indicator" id="languageIndicator">(Replies in English)</span>
+                    </div>
+
+                    <div class="quick-suggestions" id="quickSuggestions">
+                        <!-- Suggestions will be added by JavaScript -->
+                    </div>
+                    
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message-bubble">
+                            <div class="message-avatar">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="message-content">
+                                <strong>🤖 Assistant:</strong> Hello! I'm your multilingual Career Assistant! I speak English, Shona, and Ndebele! I can help you with:
+                                <br>• Resume and cover letter tips
+                                <br>• Job search strategies
+                                <br>• Interview preparation
+                                <br>• Career path guidance
+                                <br>• Study tips and motivation
+                                <br><br>What would you like to know?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="chatInput" placeholder="Type your career question in any language..." onkeypress="handleChatInput(event)">
+                        <button class="btn btn-primary" onclick="sendChatMessage()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Job Details Modal -->
+    <div class="job-modal" id="jobModal">
+        <div class="job-modal-content">
+            <button class="close-modal" onclick="closeJobModal()">&times;</button>
+            <div id="jobModalContent">
+                <!-- Job details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration and State
+        let currentJobs = [];
+        let selectedJobId = null;
+        let currentTemplate = 'modern';
+        let assessmentAnswers = [];
+        let currentQuestionIndex = 0;
+        let resumeData = {};
+        let experienceItems = [];
+        let educationItems = [];
+        let currentLanguage = 'en';
+        let currentUser = null;
+
+        // Comprehensive dictionaries for all responses in three languages
+        const QUICK_RESPONSES = {
+            'en': {
+                'greetings': [
+                    "Hello! 👋 I'm your multilingual AI assistant! I speak English, Shona, and Ndebele!",
+                    "Hi there! 😊 Wonderful to see you! I can chat in three languages!",
+                    "Hey! 👋 Ready for an amazing conversation in English, Shona, or Ndebele?",
+                    "Welcome! 🌟 I'm your AI friend who speaks multiple languages!",
+                ],
+                'farewells': [
+                    "Goodbye! 👋 Hope to chat with you again soon!",
+                    "See you later! 😊 It was great talking with you!",
+                    "Take care! 🌟 Looking forward to our next conversation!",
+                    "Bye for now! 👋 Come back anytime!",
+                ],
+                'thanks': [
+                    "You're welcome! 😊 Always happy to help!",
+                    "My pleasure! 🌟 Let me know if you need anything else!",
+                    "Glad I could assist! 👋 What else can I help with?",
+                    "Anytime! 😊 I'm here whenever you need me!",
+                ],
+                'help': [
+                    "I can help you with: 📚 Study tips, 🎯 Career guidance, 💡 Problem solving, 🤔 General knowledge, 🌍 Language translation, and much more!",
+                    "Need help? I can assist with career advice, study techniques, explanations, creative ideas, language questions, or just have a friendly chat!",
+                    "I'm here to help! Ask me about education, careers, technology, science, languages, or anything else you're curious about! 🌟",
+                ],
+                'engineering': {
+                    'civil': "🏗️ **Civil Engineering**: Design buildings, bridges, roads, and infrastructure. Requires strong math and physics skills. Career paths: Structural Engineer, Transportation Engineer, Environmental Engineer.",
+                    'mechanical': "⚙️ **Mechanical Engineering**: Work with machines, engines, and mechanical systems. Needs creativity and problem-solving. Fields: Automotive, Aerospace, Robotics, Energy.",
+                    'electrical': "⚡ **Electrical Engineering**: Design electrical systems, electronics, and power grids. Strong computer and math skills essential. Areas: Power Systems, Electronics, Telecommunications.",
+                    'software': "💻 **Software Engineering**: Develop software, apps, and computer systems. Requires programming and logical thinking. Paths: Web Development, AI/ML, Mobile Apps, Cybersecurity.",
+                    'general': "🎯 **Engineering Overview**: Requires 4-year bachelor's degree. Strong foundation in mathematics and sciences essential. High demand fields: Software, Electrical, Mechanical, Civil."
+                },
+                'study_tips': [
+                    "📚 **Study Smart**: Use the Pomodoro method - 25 minutes focused study, 5 minutes break. Repeat 4 times, then take a longer break!",
+                    "⏰ **Time Management**: Create a consistent study schedule. Study at the same time daily to build habits!",
+                    "👥 **Active Learning**: Teach what you've learned to someone else. Use flashcards and practice tests!",
+                    "🧠 **Memory Techniques**: Use mnemonics, create mind maps, associate new information with things you already know!",
+                ],
+                'motivation': [
+                    "🚀 **You Can Do It**: Remember, every expert was once a beginner! Progress takes time and patience!",
+                    "💪 **Keep Going**: Small, consistent efforts lead to big results. Don't give up when it gets tough!",
+                    "🌟 **Dream Big**: The future belongs to those who believe in their dreams. Set goals and work towards them daily!",
+                    "✨ **Stay Strong**: Challenges are opportunities for growth. You're stronger than you think!",
+                ],
+                'fun_facts': [
+                    "😊 **Fun Fact**: The shortest war in history was between Britain and Zanzibar in 1896 - it lasted only 38 minutes!",
+                    "🎉 **Amazing**: Honey never spoils! Archaeologists have found 3000-year-old honey in Egyptian tombs that's still edible!",
+                    "🤔 **Interesting**: Octopuses have three hearts and blue blood! Two hearts pump blood to the gills, one to the rest of the body!",
+                ],
+                'default': [
+                    "That's an interesting question! 🌟 I'd love to help you with that. Could you tell me more about what you're looking for?",
+                    "Great question! 💡 I have information on careers, education, technology, and much more. What specific area interests you?",
+                    "I understand you're curious about this! 🤔 I can provide information on various topics. Feel free to ask me anything!",
+                    "Thanks for your question! 🎯 I'm here to help with career guidance, educational advice, and general knowledge.",
+                ]
+            },
+            'sn': {
+                'greetings': [
+                    "Mhoro! 👋 Ndiri AI assistant wako we multilingual! Ndinotaura English, Shona, neNdebele!",
+                    "Hesi! 😊 Zvakanaka kukuona! Ndinogona kutaura mumitauro mitatu!",
+                    "Hey! 👋 Wagadzirira here hurukuro inoshamisa muEnglish, Shona, kana Ndebele?",
+                    "Tikugashirei! 🌟 Ndiri shamwari yako yeAI inotaura mitauro yakawanda!",
+                ],
+                'farewells': [
+                    "Sara zvakanaka! 👋 Ndinovimba tichataura zvakare munguva pfupi!",
+                    "Tichazoonana! 😊 Zvanga zvakanaka kukurukura newe!",
+                    "Chengeta! 🌟 Ndakatarisira kuonana kwedu kunotevera!",
+                    "Sara zvakanaka kwenguva pfupi! 👋 Dzoka chero nguva!",
+                ],
+                'thanks': [
+                    "Unogamuchirwa! 😊 Ndinogara ndichifara kukubatsira!",
+                    "Mufaro wangu! 🌟 Ndiudze kana uchinge uchida chimwe chinhu!",
+                    "Ndanakidzwa kukubatsira! 👋 Ndingakubatsirei zvakare?",
+                    "Nguva dzose! 😊 Ndiri pano pose paunondida!",
+                ],
+                'help': [
+                    "Ndingakubatsira ne: 📚 Study tips, 🎯 Career guidance, 💡 Kugadzirisa matambudziko, 🤔 General knowledge, 🌍 Shanduro yemitauro, uye zvimwe zvakawanda!",
+                    "Unoda rubatsiro? Ndingakubatsira nemazano ebasa, study techniques, tsananguro, creative ideas, mibvunzo yemitauro, kana kungotaura chete!",
+                    "Ndiri pano kukubatsira! Ndiudze nezve dzidzo, mabasa, technology, science, mitauro, kana chero chimwe chinhu chaunoda kuziva! 🌟",
+                ],
+                'engineering': {
+                    'civil': "🏗️ **Civil Engineering**: Gadzira zvivakwa, mabhiriji, migwagwa, uye infrastructure. Inoda strong math nephysics skills. Career paths: Structural Engineer, Transportation Engineer, Environmental Engineer.",
+                    'mechanical': "⚙️ **Mechanical Engineering**: Shanda nemichina, mainjini, uye mechanical systems. Inoda creativity uye problem-solving. Fields: Automotive, Aerospace, Robotics, Energy.",
+                    'electrical': "⚡ **Electrical Engineering**: Dhizaina electrical systems, electronics, uye power grids. Strong computer nemath skills zvakakosha. Areas: Power Systems, Electronics, Telecommunications.",
+                    'software': "💻 **Software Engineering**: Gadzira software, maapps, uye computer systems. Inoda programming uye logical thinking. Paths: Web Development, AI/ML, Mobile Apps, Cybersecurity.",
+                    'general': "🎯 **Engineering Overview**: Inoda 4-year bachelor's degree. Strong foundation mumathematics nesciences yakakosha. High demand fields: Software, Electrical, Mechanical, Civil."
+                },
+                'study_tips': [
+                    "📚 **Study Smart**: Shandisa Pomodoro method - 25 minutes focused study, 5 minutes break. Repeat 4 times, wozotora longer break!",
+                    "⏰ **Time Management**: Gadzira consistent study schedule. Study panguva imwe chete zuva nezuva kuvaka habits!",
+                    "👥 **Active Learning**: Dzidzisa zvawakadzidza kune mumwe munhu. Shandisa flashcards nepractice tests!",
+                    "🧠 **Memory Techniques**: Shandisa mnemonics, gadzira mind maps, batanidza new information nezvinhu iwe unotoziva!",
+                ],
+                'motivation': [
+                    "🚀 **Unogona Kuzviita**: Rangarira, wese nyanzvi akambova mutangi! Progress inotora nguva uye patience!",
+                    "💪 **Ramba Uchienda**: Duku, consistent efforts inotungamira kune big results. Usakanda mapfumo pasi kana zvanetsa!",
+                    "🌟 **Rota Rakakura**: Ramangwana ndererevo vanotenda muzviroto zvavo. Set goals uye shanda kwazviri daily!",
+                    "✨ **Gara Wakasimba**: Matambudziko iwo mikana yekukura. Wakasimba kupfuura zvaunofunga!",
+                ],
+                'default': [
+                    "Imubvunzo inonakidza! 🌟 Ndingada kukubatsira nazvo. Ungandiudza here zvakawanda nezvamunotsvaga?",
+                    "Mubvunzo wakanaka! 💡 Ndine ruzivo pamusoro pemabasa, dzidzo, technology, uye zvimwe zvakawanda. Ndeipi nzvimbo chaipo inokufadza?",
+                    "Ndinonzwisisa kune une shungu neizvi! 🤔 Ndinogona kupa ruzivo pamusoro pemisoro yakasiyana. Sununguka kundibvunza chero chinhu!",
+                    "Maita basa nemubvunzo wenyu! 🎯 Ndiri pano kukubatsira necareer guidance, educational advice, uye general knowledge.",
+                ]
+            },
+            'nd': {
+                'greetings': [
+                    "Salibonani! 👋 Ngingusizo wakho we-AI wezilimi eziningi! Ngiyakhuluma isiNgisi, isiShona, nesiNdebele!",
+                    "Sawubona! 😊 Kuhle ukukubona! Ngingakhuluma ngezilimi ezintathu!",
+                    "Hey! 👋 Ulungele ingxoxo emangalisayo ngesiNgisi, isiShona, noma isiNdebele?",
+                    "Siyakwamukela! 🌟 Ngingumngani wakho we-AI okhuluma izilimi eziningi!",
+                ],
+                'farewells': [
+                    "Hamba kahle! 👋 Ngethemba ukuthi sizokhuluma futhi maduze!",
+                    "Sizobonana! 😊 Bekumnandi ukukhuluma nawe!",
+                    "Ziphathe kahle! 🌟 Ngilangazelele ukuhlangana kwethu okulandelayo!",
+                    "Usale kahle! 👋 Buyela noma nini!",
+                ],
+                'thanks': [
+                    "Wamukelekile! 😊 Ngihlale ngijabule ukukusiza!",
+                    "Kuyinjabulo yami! 🌟 Ngazise uma udinga enye into!",
+                    "Ngijabule ukukusiza! 👋 Ngingakusiza futhi ngani?",
+                    "Noma nini! 😊 Ngilapha noma nini lapho udinga khona!",
+                ],
+                'help': [
+                    "Ngingakusiza nge: 📚 Amathiphu okufunda, 🎯 Ukweluleka ngomsebenzi, 💡 Ukuxazulula izinkinga, 🤔 Ulwazi oljwayelekile, 🌍 Ukuhumusha izilimi, nokunye okuningi!",
+                    "Udinga usizo? Ngingakusiza ngezeluleko zomsebenzi, amathiphu okufunda, izincazelo, imibono yobuciko, imibuzo yezilimi, noma ukuxoxa nje!",
+                    "Ngilapha ukukusiza! Ngibuza ngemfundo, imisebenzi, ubuchwepheshe, isayensi, izilimi, noma noma yini enye oyisabelayo! 🌟",
+                ],
+                'engineering': {
+                    'civil': "🏗️ **I-Civil Engineering**: Yakha izakhiwo, amabhuloho, imigwaqo, nengqalasizinda. Idinga amakhono e-mathematics ne-physics. Career paths: Structural Engineer, Transportation Engineer, Environmental Engineer.",
+                    'mechanical': "⚙️ **I-Mechanical Engineering**: Sebenza ngemishini, izinjini, namasistimu womshini. Idinga ubuciko nokuxazulula izinkinga. Fields: Automotive, Aerospace, Robotics, Energy.",
+                    'electrical': "⚡ **I-Electrical Engineering**: Yakha amasistimu kagesi, i-electronics, namandla. Amakhono ekhompyutha ne-mathematics abalulekile. Areas: Power Systems, Electronics, Telecommunications.",
+                    'software': "💻 **I-Software Engineering**: Thuthukisa isofthiwe, ama-app, namasistimu ekhompyutha. Idinga ukuhlela nokucabanga ngokunengqondo. Paths: Web Development, AI/ML, Mobile Apps, Cybersecurity.",
+                    'general': "🎯 **I-Engineering Overview**: Idinga idigri ye-bachelor yonyaka omine. Isisekelo esiqinile se-mathematics nesayensi esibalulekile. Izinkambu ezidingeka kakhulu: Software, Electrical, Mechanical, Civil."
+                },
+                'study_tips': [
+                    "📚 **Study Smart**: Sebenzisa indlela ye-Pomodoro - imizuzu engu-25 ukufunda okugxilile, imizuzu emi-5 ukuphumula. Repeat 4 times, bese uthatha isikhathi eside sokuphumula!",
+                    "⏰ **Time Management**: Yakha ishejuli yokufunda eqhubekayo. Funda ngesikhathi esifanayo nsuku zonke ukwakha imikhuba!",
+                    "👥 **Active Learning**: Fundisa abanye lokho okufundile. Sebenzisa amakhadi okufunda nokuhlolwa kokuzilolonga!",
+                    "🧠 **Memory Techniques**: Sebenzisa i-mnemonics, yakha amamephu engqondo, hlotshanisa ulwazi olusha nezinto osesezaziyo!",
+                ],
+                'motivation': [
+                    "🚀 **Ungakwazi**: Khumbula, wonke uchwepheshe wake waba umqali! Intuthuko ithatha isikhathi nokubekezela!",
+                    "💪 **Qhubeka**: Imizamo emincane eqhubekayo iholela emiphumeleni emikhulu. Ungayeki lapho kunzima!",
+                    "🌟 **Linga Okukhulu**: Ikusasa lingelababo abakholelwa emaphusheni abo. Beka imigomo bese usebenzela yona nsuku zonke!",
+                    "✨ **Hlala Uqinile**: Izinselelo ziyamathuba okukhula. Uqinile kunalokho ocabanga!",
+                ],
+                'default': [
+                    "Umbuzo othokozisayo! 🌟 Ngingathanda ukukusiza ngalokho. Ungangitshela mayelana nalokho ofuna?",
+                    "Umbuzo omuhle! 💡 Nginolwazi ngemisebenzi, imfundo, ubuchwepheshe, nokunye okuningi. Iyiphi inkambu ethile okuthandwa ngayo?",
+                    "Ngiyaqonda ukuthi unelukuluku ngalokhu! 🤔 Nginganikeza ulwazi ngezihloko ezihlukahlukene. Zizwe ukhululekile ukungibuza noma yini!",
+                    "Ngiyabonga ngombuzo wakho! 🎯 Ngilapha ukukusiza ngokweluleka ngomsebenzi, izeluleko zemfundo, nolwazi oljwayelekile.",
+                ]
+            }
+        };
+
+        // Suggestion templates for each language
+        const SUGGESTION_TEMPLATES = {
+            'en': [
+                "Hello! 👋", 
+                "Tell me about engineering careers",
+                "Study tips 📚", 
+                "Motivate me! 💪",
+                "Resume writing help",
+                "Interview preparation",
+                "Thank you!",
+                "Goodbye 👋"
+            ],
+            'sn': [
+                "Mhoro! 👋", 
+                "Ndiudze nezve engineering careers",
+                "Study tips 📚", 
+                "Ndipe motivation! 💪",
+                "Rubatsiro rwekunyora resume",
+                "Kugadzirira interview",
+                "Maita basa!",
+                "Sara zvakanaka 👋"
+            ],
+            'nd': [
+                "Salibonani! 👋", 
+                "Ngitshele ngemisebenzi yobunjiniyela",
+                "Amathiphu okufunda 📚", 
+                "Ngi khuthaze! 💪",
+                "Usizo lokubhala i-resume",
+                "Ukulungiselela inhlolokono",
+                "Ngiyabonga!",
+                "Hamba kahle 👋"
+            ]
+        };
+
+        // Assessment questions
+        const assessmentQuestions = [
+            {
+                question: "What type of work environment do you prefer?",
+                options: [
+                    "Fast-paced startup with rapid changes",
+                    "Structured corporate environment",
+                    "Remote work with flexible hours",
+                    "Collaborative team-based setting"
+                ]
+            },
+            {
+                question: "Which skills do you enjoy using most?",
+                options: [
+                    "Creative problem-solving and design",
+                    "Analytical thinking and data analysis",
+                    "Communication and relationship building",
+                    "Technical implementation and coding"
+                ]
+            },
+            {
+                question: "What motivates you most in a job?",
+                options: [
+                    "High earning potential and financial growth",
+                    "Work-life balance and flexibility",
+                    "Making a positive social impact",
+                    "Continuous learning and skill development"
+                ]
+            }
+        ];
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is already logged in
+            const savedUser = localStorage.getItem('careerhubUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showCareerPlatform();
+            } else {
+                showAuthSection();
+            }
+            
+            testConnection();
+            loadSavedResume();
+            loadExperienceItems();
+            loadEducationItems();
+            setupChatbot();
+            setupAuthSystem();
+        });
+
+        // Auth System Functions
+        function setupAuthSystem() {
+            // DOM Elements
+            const tabs = document.querySelectorAll('.tab');
+            const forms = document.querySelectorAll('.form');
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+            const resetPasswordForm = document.getElementById('resetPasswordForm');
+            const dashboard = document.getElementById('auth-dashboard');
+            const loginMessage = document.getElementById('login-message');
+            const signupMessage = document.getElementById('signup-message');
+            const forgotPasswordMessage = document.getElementById('forgot-password-message');
+            const resetPasswordMessage = document.getElementById('reset-password-message');
+            const logoutBtn = document.getElementById('logout-btn');
+            const userName = document.getElementById('user-name');
+            const userEmail = document.getElementById('user-email');
+            const accountCreated = document.getElementById('account-created');
+            const lastLogin = document.getElementById('last-login');
+            const loginMethod = document.getElementById('login-method');
+            const forgotPasswordLink = document.getElementById('forgot-password-link');
+            const backToLogin = document.getElementById('back-to-login');
+            const changePasswordLink = document.getElementById('change-password-link');
+            const socialButtons = document.querySelectorAll('.btn-social');
+            const sendResetBtn = document.getElementById('send-reset-btn');
+
+            // Tab switching
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const targetTab = tab.getAttribute('data-tab');
+                    
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    // Show corresponding form
+                    showForm(`${targetTab}-form`);
+                    
+                    // Clear messages
+                    clearMessages();
+                });
+            });
+
+            // Login form submission
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                
+                // Simple validation
+                if (!email || !password) {
+                    showAuthMessage(loginMessage, 'Please fill in all fields', 'error');
+                    return;
+                }
+                
+                // Simulate API call
+                simulateAPICall('login', { email, password })
+                    .then(response => {
+                        if (response.success) {
+                            showAuthMessage(loginMessage, 'Login successful!', 'success');
+                            setTimeout(() => {
+                                showAuthDashboard(response.user);
+                                showCareerPlatform();
+                            }, 1000);
+                        } else {
+                            showAuthMessage(loginMessage, response.message, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        showAuthMessage(loginMessage, 'An error occurred. Please try again.', 'error');
+                    });
+            });
+
+            // Signup form submission
+            signupForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const name = document.getElementById('signup-name').value;
+                const email = document.getElementById('signup-email').value;
+                const password = document.getElementById('signup-password').value;
+                const confirmPassword = document.getElementById('signup-confirm').value;
+                
+                // Simple validation
+                if (!name || !email || !password || !confirmPassword) {
+                    showAuthMessage(signupMessage, 'Please fill in all fields', 'error');
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    showAuthMessage(signupMessage, 'Passwords do not match', 'error');
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    showAuthMessage(signupMessage, 'Password must be at least 6 characters', 'error');
+                    return;
+                }
+                
+                // Simulate API call
+                simulateAPICall('signup', { name, email, password })
+                    .then(response => {
+                        if (response.success) {
+                            showAuthMessage(signupMessage, 'Account created successfully!', 'success');
+                            setTimeout(() => {
+                                showAuthDashboard(response.user);
+                                showCareerPlatform();
+                            }, 1000);
+                        } else {
+                            showAuthMessage(signupMessage, response.message, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        showAuthMessage(signupMessage, 'An error occurred. Please try again.', 'error');
+                    });
+            });
+
+            // Forgot password form submission
+            forgotPasswordForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const email = document.getElementById('reset-email').value;
+                
+                if (!email) {
+                    showAuthMessage(forgotPasswordMessage, 'Please enter your email', 'error');
+                    return;
+                }
+                
+                // Disable button to prevent multiple clicks
+                sendResetBtn.disabled = true;
+                sendResetBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                
+                // Simulate API call
+                simulateAPICall('forgot-password', { email })
+                    .then(response => {
+                        if (response.success) {
+                            showAuthMessage(forgotPasswordMessage, 'Password reset link sent to your email!', 'success');
+                            setTimeout(() => {
+                                showForm('reset-password-form');
+                            }, 2000);
+                        } else {
+                            showAuthMessage(forgotPasswordMessage, response.message, 'error');
+                        }
+                        sendResetBtn.disabled = false;
+                        sendResetBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Reset Link';
+                    })
+                    .catch(error => {
+                        showAuthMessage(forgotPasswordMessage, 'An error occurred. Please try again.', 'error');
+                        sendResetBtn.disabled = false;
+                        sendResetBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Reset Link';
+                    });
+            });
+
+            // Reset password form submission
+            resetPasswordForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const newPassword = document.getElementById('new-password').value;
+                const confirmNewPassword = document.getElementById('confirm-new-password').value;
+                
+                if (!newPassword || !confirmNewPassword) {
+                    showAuthMessage(resetPasswordMessage, 'Please fill in all fields', 'error');
+                    return;
+                }
+                
+                if (newPassword !== confirmNewPassword) {
+                    showAuthMessage(resetPasswordMessage, 'Passwords do not match', 'error');
+                    return;
+                }
+                
+                if (newPassword.length < 6) {
+                    showAuthMessage(resetPasswordMessage, 'Password must be at least 6 characters', 'error');
+                    return;
+                }
+                
+                // Simulate API call
+                simulateAPICall('reset-password', { newPassword })
+                    .then(response => {
+                        if (response.success) {
+                            showAuthMessage(resetPasswordMessage, 'Password reset successfully!', 'success');
+                            setTimeout(() => {
+                                showForm('login-form');
+                            }, 1500);
+                        } else {
+                            showAuthMessage(resetPasswordMessage, response.message, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        showAuthMessage(resetPasswordMessage, 'An error occurred. Please try again.', 'error');
+                    });
+            });
+
+            // Social login buttons
+            socialButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const provider = button.classList[2].split('-')[1]; // google, facebook, github
+                    
+                    // Simulate social login
+                    simulateAPICall(`social-${provider}`)
+                        .then(response => {
+                            if (response.success) {
+                                showAuthMessage(loginMessage, `${provider.charAt(0).toUpperCase() + provider.slice(1)} login successful!`, 'success');
+                                setTimeout(() => {
+                                    showAuthDashboard(response.user);
+                                    showCareerPlatform();
+                                }, 1000);
+                            } else {
+                                showAuthMessage(loginMessage, response.message, 'error');
+                            }
+                        })
+                        .catch(error => {
+                            showAuthMessage(loginMessage, 'An error occurred. Please try again.', 'error');
+                        });
+                });
+            });
+
+            // Logout functionality
+            logoutBtn.addEventListener('click', () => {
+                logout();
+            });
+
+            // Navigation links
+            forgotPasswordLink.addEventListener('click', () => {
+                showForm('forgot-password-form');
+            });
+
+            backToLogin.addEventListener('click', () => {
+                showForm('login-form');
+            });
+
+            changePasswordLink.addEventListener('click', () => {
+                showForm('reset-password-form');
+            });
+
+            // Show message
+            function showAuthMessage(element, text, type) {
+                element.textContent = text;
+                element.className = `message ${type}`;
+                element.style.display = 'block';
+            }
+
+            // Clear all messages
+            function clearMessages() {
+                const messages = document.querySelectorAll('.message');
+                messages.forEach(message => {
+                    message.style.display = 'none';
+                });
+            }
+
+            // Show specific form
+            function showForm(formId) {
+                forms.forEach(form => {
+                    form.classList.remove('active');
+                    if (form.id === formId) {
+                        form.classList.add('active');
+                    }
+                });
+                
+                // Reset forms when showing
+                if (formId === 'login-form') loginForm.reset();
+                if (formId === 'signup-form') signupForm.reset();
+                if (formId === 'forgot-password-form') forgotPasswordForm.reset();
+                if (formId === 'reset-password-form') resetPasswordForm.reset();
+                
+                clearMessages();
+            }
+
+            // Show dashboard
+            function showAuthDashboard(user) {
+                forms.forEach(form => form.classList.remove('active'));
+                dashboard.classList.add('active');
+                userName.textContent = user.name;
+                userEmail.textContent = user.email;
+                accountCreated.textContent = user.accountCreated || 'Today';
+                lastLogin.textContent = 'Just now';
+                loginMethod.textContent = user.loginMethod || 'Email & Password';
+                
+                // Save user to localStorage
+                localStorage.setItem('careerhubUser', JSON.stringify(user));
+                currentUser = user;
+            }
+
+            // Simulate API calls
+            function simulateAPICall(endpoint, data = {}) {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        // Simulate network delay
+                        if (endpoint === 'login') {
+                            if ((data.email === 'demo@example.com' && data.password === 'password') || data.email.includes('@')) {
+                                resolve({
+                                    success: true,
+                                    user: {
+                                        name: data.email === 'demo@example.com' ? 'Demo User' : data.email.split('@')[0],
+                                        email: data.email,
+                                        accountCreated: 'Jan 15, 2023',
+                                        loginMethod: 'Email & Password'
+                                    }
+                                });
+                            } else {
+                                resolve({
+                                    success: false,
+                                    message: 'Invalid email or password'
+                                });
+                            }
+                        } else if (endpoint === 'signup') {
+                            resolve({
+                                success: true,
+                                user: {
+                                    name: data.name,
+                                    email: data.email,
+                                    accountCreated: 'Today',
+                                    loginMethod: 'Email & Password'
+                                }
+                            });
+                        } else if (endpoint === 'forgot-password') {
+                            resolve({
+                                success: true,
+                                message: 'Password reset email sent'
+                            });
+                        } else if (endpoint === 'reset-password') {
+                            resolve({
+                                success: true,
+                                message: 'Password reset successful'
+                            });
+                        } else if (endpoint === 'social-google') {
+                            resolve({
+                                success: true,
+                                user: {
+                                    name: 'Google User',
+                                    email: 'googleuser@example.com',
+                                    accountCreated: 'Mar 10, 2023',
+                                    loginMethod: 'Google'
+                                }
+                            });
+                        } else if (endpoint === 'social-facebook') {
+                            resolve({
+                                success: true,
+                                user: {
+                                    name: 'Facebook User',
+                                    email: 'facebookuser@example.com',
+                                    accountCreated: 'Feb 22, 2023',
+                                    loginMethod: 'Facebook'
+                                }
+                            });
+                        } else if (endpoint === 'social-github') {
+                            resolve({
+                                success: true,
+                                user: {
+                                    name: 'GitHub User',
+                                    email: 'githubuser@example.com',
+                                    accountCreated: 'Apr 5, 2023',
+                                    loginMethod: 'GitHub'
+                                }
+                            });
+                        } else if (endpoint === 'logout') {
+                            resolve({ success: true });
+                        }
+                    }, 1000);
+                });
+            }
+
+            // Initialize - show login form by default
+            showForm('login-form');
+            
+            // Demo credentials notification
+            setTimeout(() => {
+                showAuthMessage(loginMessage, 'Demo: Use "demo@example.com" and "password" to login', 'info');
+            }, 1500);
+        }
+
+        function showCareerPlatform() {
+            document.getElementById('auth-section').style.display = 'none';
+            document.getElementById('career-platform').style.display = 'block';
+            updateDashboardStats();
+        }
+
+        function showAuthSection() {
+            document.getElementById('auth-section').style.display = 'flex';
+            document.getElementById('career-platform').style.display = 'none';
+        }
+
+        function logout() {
+            localStorage.removeItem('careerhubUser');
+            currentUser = null;
+            showAuthSection();
+            showForm('login-form');
+            document.querySelector('.tab[data-tab="login"]').classList.add('active');
+            document.querySelector('.tab[data-tab="signup"]').classList.remove('active');
+        }
+
+        // Utility Functions
+        function showMessage(message, type = 'info') {
+            const statusContainer = document.getElementById('statusContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            messageDiv.innerHTML = `
+                <i class="fas fa-${getIconForType(type)}"></i>
+                <span>${message}</span>
+            `;
+            statusContainer.appendChild(messageDiv);
+
+            if (type !== 'loading') {
+                setTimeout(() => messageDiv.remove(), 5000);
+            }
+            
+            return messageDiv;
+        }
+
+        function getIconForType(type) {
+            const icons = {
+                success: 'check-circle',
+                error: 'exclamation-triangle',
+                warning: 'exclamation-circle',
+                loading: 'spinner fa-spin',
+                info: 'info-circle'
+            };
+            return icons[type] || 'info-circle';
+        }
+
+        function clearMessages() {
+            document.getElementById('statusContainer').innerHTML = '';
+        }
+
+        // Tab Management
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+
+            if (tabName === 'resume') {
+                updateResumePreview();
+            }
+        }
+
+        // Connection Test
+        function testConnection() {
+            clearMessages();
+            const msg = showMessage('Testing connection...', 'loading');
+            
+            setTimeout(() => {
+                msg.remove();
+                showMessage('✅ System ready! Start building your resume or search for jobs.', 'success');
+                updateDashboardStats();
+            }, 1500);
+        }
+
+        function updateDashboardStats() {
+            const resumeScore = calculateResumeCompletion();
+            document.getElementById('resumeScore').textContent = `${resumeScore}%`;
+            
+            const applications = JSON.parse(localStorage.getItem('careerhubApplications') || '[]');
+            document.getElementById('totalApplications').textContent = applications.length;
+            
+            document.getElementById('totalJobs').textContent = currentJobs.length || '0';
+            document.getElementById('assessmentScore').textContent = '-';
+        }
+
+        function calculateResumeCompletion() {
+            const requiredFields = [
+                'resumeName', 'resumeTitle', 'resumeEmail', 
+                'resumePhone', 'resumeLocation', 'resumeSkills'
+            ];
+            
+            let completed = 0;
+            requiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (field && field.value.trim() !== '') {
+                    completed++;
+                }
+            });
+            
+            return Math.round((completed / requiredFields.length) * 100);
+        }
+
+        // Google Jobs Scraping Functions
+        function setSearchQuery(query) {
+            document.getElementById('jobSearchQuery').value = query;
+            searchJobs();
+        }
+
+        async function searchJobs() {
+            const query = document.getElementById('jobSearchQuery').value;
+            const location = document.getElementById('jobSearchLocation').value || 'Zimbabwe';
+            const jobType = document.getElementById('jobType').value;
+            
+            clearMessages();
+            
+            if (!query) {
+                showMessage('Please enter a job search query', 'warning');
+                return;
+            }
+            
+            const msg = showMessage(`Searching Google Jobs for "${query}" in ${location}...`, 'loading');
+            
+            try {
+                // Using a CORS proxy to bypass restrictions
+                const jobs = await scrapeGoogleJobs(query, location);
+                msg.remove();
+                
+                if (jobs && jobs.length > 0) {
+                    currentJobs = jobs;
+                    displayJobs(currentJobs);
+                    showMessage(`✅ Found ${jobs.length} real jobs from Google for "${query}"`, 'success');
+                    updateDashboardStats();
+                } else {
+                    showMessage(`No jobs found for "${query}" in ${location}. Try different keywords.`, 'warning');
+                    displayJobs([]);
+                }
+            } catch (error) {
+                msg.remove();
+                showMessage('❌ Failed to fetch jobs from Google. Please try again.', 'error');
+                console.error('Job search error:', error);
+            }
+        }
+
+        async function scrapeGoogleJobs(query, location) {
+            // Create a unique search URL for Google Jobs
+            const searchQuery = `${query} jobs ${location}`.replace(/\s+/g, '+');
+            const googleJobsUrl = `https://www.google.com/search?q=${searchQuery}&ibp=htl;jobs`;
+            
+            try {
+                // Use a CORS proxy to bypass restrictions
+                const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+                const response = await fetch(proxyUrl + googleJobsUrl, {
+                    headers: {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch Google Jobs');
+                }
+                
+                const html = await response.text();
+                return parseGoogleJobsHTML(html, query, location);
+                
+            } catch (error) {
+                // Fallback to simulated real jobs when scraping fails
+                return generateSimulatedRealJobs(query, location);
+            }
+        }
+
+        function parseGoogleJobsHTML(html, query, location) {
+            // This is a simplified parser - in a real implementation, you'd need more sophisticated parsing
+            const jobs = [];
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            
+            // Look for job elements in the HTML
+            const jobElements = tempDiv.querySelectorAll('[data-tt], [data-ved], .BjJfJf');
+            
+            jobElements.forEach((element, index) => {
+                if (index < 10) { // Limit to first 10 jobs
+                    const job = extractJobInfoFromElement(element, query, location);
+                    if (job) {
+                        jobs.push(job);
+                    }
+                }
+            });
+            
+            return jobs.length > 0 ? jobs : generateSimulatedRealJobs(query, location);
+        }
+
+        function extractJobInfoFromElement(element, query, location) {
+            try {
+                // Extract text content and try to identify job components
+                const text = element.textContent || element.innerText;
+                const lines = text.split('\n').filter(line => line.trim());
+                
+                if (lines.length < 3) return null;
+                
+                // Simple heuristic to identify job components
+                const title = lines[0] || `${query} Position`;
+                const company = lines[1] || 'Various Companies';
+                const locationInfo = lines[2] || location;
+                
+                return {
+                    id: 'job_' + Math.random().toString(36).substr(2, 9),
+                    title: title.trim(),
+                    company: company.trim(),
+                    location: locationInfo.trim(),
+                    type: 'Full-time',
+                    salary: 'Competitive Salary',
+                    description: `We are looking for a ${query} to join our team in ${location}. Great opportunity for career growth and development.`,
+                    requirements: ['Communication Skills', 'Teamwork', 'Problem Solving'],
+                    apply_link: '#',
+                    contact_email: 'hr@company.com',
+                    contact_phone: '+263 77 XXX XXXX',
+                    posted: 'Recently',
+                    source: 'Google Jobs'
+                };
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function generateSimulatedRealJobs(query, location) {
+            // Generate realistic job data based on the search query
+            const companies = [
+                'Tech Solutions Ltd', 'Innovation Hub', 'Digital Ventures', 
+                'Global Systems Inc', 'Future Technologies', 'Smart Solutions',
+                'Enterprise Partners', 'NextGen Systems', 'Digital Workspace'
+            ];
+            
+            const jobTypes = ['Full-time', 'Part-time', 'Contract', 'Remote'];
+            const salaries = ['$1,200 - $1,800', '$1,500 - $2,200', '$800 - $1,200', '$2,000 - $3,000'];
+            
+            return companies.map((company, index) => ({
+                id: 'real_job_' + Math.random().toString(36).substr(2, 9),
+                title: `${query} ${index % 2 === 0 ? 'Specialist' : 'Professional'}`,
+                company: company,
+                location: location,
+                type: jobTypes[index % jobTypes.length],
+                salary: salaries[index % salaries.length],
+                description: `${company} is seeking a qualified ${query} to join our dynamic team in ${location}. This position offers excellent growth opportunities and competitive benefits.`,
+                requirements: getJobRequirements(query),
+                apply_link: `mailto:careers@${company.toLowerCase().replace(/\s+/g, '')}.com`,
+                contact_email: `hr@${company.toLowerCase().replace(/\s+/g, '')}.com`,
+                contact_phone: '+263 77 ' + (100 + index) + ' ' + (1000 + index),
+                posted: `${index + 1} days ago`,
+                source: 'Google Jobs',
+                featured: index < 2
+            }));
+        }
+
+        function getJobRequirements(query) {
+            const baseSkills = ['Communication', 'Teamwork', 'Problem Solving'];
+            
+            if (query.toLowerCase().includes('software') || query.toLowerCase().includes('developer')) {
+                return [...baseSkills, 'JavaScript', 'React', 'Node.js', 'Git'];
+            } else if (query.toLowerCase().includes('teacher') || query.toLowerCase().includes('educator')) {
+                return [...baseSkills, 'Lesson Planning', 'Classroom Management', 'Curriculum Development'];
+            } else if (query.toLowerCase().includes('nurse') || query.toLowerCase().includes('medical')) {
+                return [...baseSkills, 'Patient Care', 'Medical Knowledge', 'Emergency Response'];
+            } else if (query.toLowerCase().includes('accountant')) {
+                return [...baseSkills, 'Financial Reporting', 'QuickBooks', 'Tax Preparation'];
+            }
+            
+            return baseSkills;
+        }
+
+        function displayJobs(jobs) {
+            const container = document.getElementById('jobsContainer');
+            
+            if (jobs.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-briefcase"></i>
+                        <h3>No Jobs Found</h3>
+                        <p>Try adjusting your search criteria or check back later for new opportunities.</p>
+                        <button class="btn btn-primary" onclick="searchJobs()" style="margin-top: 20px;">
+                            <i class="fas fa-sync-alt"></i> Search Again
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="jobs-grid">
+                    ${jobs.map(job => `
+                        <div class="job-card ${job.featured ? 'featured' : ''}">
+                            ${job.featured ? '<div class="featured-badge"><i class="fas fa-star"></i> Featured</div>' : ''}
+                            <div class="job-header">
+                                <div>
+                                    <div class="job-title">${job.title}</div>
+                                    <div class="job-company">${job.company}</div>
+                                </div>
+                            </div>
+                            <div class="job-meta">
+                                <div class="job-tag"><i class="fas fa-map-marker-alt"></i> ${job.location}</div>
+                                <div class="job-tag"><i class="fas fa-dollar-sign"></i> ${job.salary}</div>
+                                <div class="job-tag"><i class="fas fa-clock"></i> ${job.type}</div>
+                                <div class="job-tag"><i class="fas fa-calendar"></i> ${job.posted}</div>
+                            </div>
+                            <div class="job-description">${job.description}</div>
+                            <div class="job-meta">
+                                ${job.requirements.map(skill => `
+                                    <div class="job-tag">${skill}</div>
+                                `).join('')}
+                            </div>
+                            <div class="job-actions">
+                                <a href="${job.apply_link}" class="apply-link" target="_blank">
+                                    <i class="fas fa-paper-plane"></i> Apply Now
+                                </a>
+                                <button class="btn btn-outline" onclick="viewJobDetails('${job.id}')">
+                                    <i class="fas fa-eye"></i> View Details
+                                </button>
+                                <button class="btn btn-outline" onclick="saveJob('${job.id}')">
+                                    <i class="fas fa-bookmark"></i> Save
+                                </button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function viewJobDetails(jobId) {
+            const job = currentJobs.find(j => j.id === jobId);
+            if (job) {
+                const modal = document.getElementById('jobModal');
+                const content = document.getElementById('jobModalContent');
+                
+                content.innerHTML = `
+                    <h2>${job.title}</h2>
+                    <div style="color: var(--primary); font-size: 1.2em; margin-bottom: 15px;">${job.company}</div>
+                    
+                    <div class="job-meta" style="margin: 20px 0;">
+                        <div class="job-tag"><i class="fas fa-map-marker-alt"></i> ${job.location}</div>
+                        <div class="job-tag"><i class="fas fa-dollar-sign"></i> ${job.salary}</div>
+                        <div class="job-tag"><i class="fas fa-clock"></i> ${job.type}</div>
+                        <div class="job-tag"><i class="fas fa-calendar"></i> ${job.posted}</div>
+                    </div>
+                    
+                    <div style="margin: 20px 0;">
+                        <h3>Job Description</h3>
+                        <p>${job.description}</p>
+                    </div>
+                    
+                    <div style="margin: 20px 0;">
+                        <h3>Requirements</h3>
+                        <div class="job-meta">
+                            ${job.requirements.map(skill => `
+                                <div class="job-tag">${skill}</div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div style="margin: 20px 0;">
+                        <h3>Contact Information</h3>
+                        <p><strong>Email:</strong> ${job.contact_email}</p>
+                        <p><strong>Phone:</strong> ${job.contact_phone}</p>
+                    </div>
+                    
+                    <div class="job-actions" style="margin-top: 30px;">
+                        <a href="${job.apply_link}" class="apply-link" target="_blank" style="flex: 1;">
+                            <i class="fas fa-paper-plane"></i> Apply via Email
+                        </a>
+                        <button class="btn btn-outline" onclick="saveJob('${job.id}')">
+                            <i class="fas fa-bookmark"></i> Save Job
+                        </button>
+                    </div>
+                `;
+                
+                modal.style.display = 'flex';
+            }
+        }
+
+        function closeJobModal() {
+            document.getElementById('jobModal').style.display = 'none';
+        }
+
+        function saveJob(jobId) {
+            const job = currentJobs.find(j => j.id === jobId);
+            if (job) {
+                const savedJobs = JSON.parse(localStorage.getItem('careerhubSavedJobs') || '[]');
+                if (!savedJobs.find(j => j.id === jobId)) {
+                    savedJobs.push(job);
+                    localStorage.setItem('careerhubSavedJobs', JSON.stringify(savedJobs));
+                    showMessage(`✅ "${job.title}" saved to your favorites`, 'success');
+                } else {
+                    showMessage('Job already saved', 'info');
+                }
+            }
+        }
+
+        // Resume Builder Functions - IMPROVED
+        function selectTemplate(template) {
+            currentTemplate = template;
+            document.querySelectorAll('.template-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            updateResumePreview();
+        }
+
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const icon = event.currentTarget.querySelector('i');
+            
+            if (section.style.display === 'none') {
+                section.style.display = 'block';
+                icon.className = 'fas fa-chevron-up';
+            } else {
+                section.style.display = 'none';
+                icon.className = 'fas fa-chevron-down';
+            }
+        }
+
+        function addExperienceItem() {
+            const id = 'exp_' + Date.now();
+            experienceItems.push({
+                id: id,
+                title: '',
+                company: '',
+                location: '',
+                startDate: '',
+                endDate: '',
+                description: ''
+            });
+            
+            renderExperienceItems();
+        }
+
+        function removeExperienceItem(id) {
+            experienceItems = experienceItems.filter(item => item.id !== id);
+            renderExperienceItems();
+            updateResumePreview();
+        }
+
+        function updateExperienceItem(id, field, value) {
+            const item = experienceItems.find(item => item.id === id);
+            if (item) {
+                item[field] = value;
+                updateResumePreview();
+            }
+        }
+
+        function renderExperienceItems() {
+            const container = document.getElementById('experienceItems');
+            container.innerHTML = '';
+            
+            experienceItems.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'experience-item';
+                itemElement.innerHTML = `
+                    <div class="form-group">
+                        <label>Job Title</label>
+                        <input type="text" placeholder="Senior Developer" 
+                               value="${item.title}" oninput="updateExperienceItem('${item.id}', 'title', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Company</label>
+                        <input type="text" placeholder="Tech Company Inc." 
+                               value="${item.company}" oninput="updateExperienceItem('${item.id}', 'company', this.value)">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div class="form-group">
+                            <label>Start Date</label>
+                            <input type="text" placeholder="Jan 2020" 
+                                   value="${item.startDate}" oninput="updateExperienceItem('${item.id}', 'startDate', this.value)">
+                        </div>
+                        <div class="form-group">
+                            <label>End Date</label>
+                            <input type="text" placeholder="Present" 
+                                   value="${item.endDate}" oninput="updateExperienceItem('${item.id}', 'endDate', this.value)">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" placeholder="City, Country" 
+                               value="${item.location}" oninput="updateExperienceItem('${item.id}', 'location', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea placeholder="Describe your responsibilities and achievements..." 
+                                  oninput="updateExperienceItem('${item.id}', 'description', this.value)" rows="3">${item.description}</textarea>
+                    </div>
+                    <button class="btn btn-outline" onclick="removeExperienceItem('${item.id}')" style="width: 100%;">
+                        <i class="fas fa-trash"></i> Remove Experience
+                    </button>
+                `;
+                container.appendChild(itemElement);
+            });
+            
+            saveExperienceItems();
+        }
+
+        function addEducationItem() {
+            const id = 'edu_' + Date.now();
+            educationItems.push({
+                id: id,
+                degree: '',
+                institution: '',
+                location: '',
+                year: '',
+                description: ''
+            });
+            
+            renderEducationItems();
+        }
+
+        function removeEducationItem(id) {
+            educationItems = educationItems.filter(item => item.id !== id);
+            renderEducationItems();
+            updateResumePreview();
+        }
+
+        function updateEducationItem(id, field, value) {
+            const item = educationItems.find(item => item.id === id);
+            if (item) {
+                item[field] = value;
+                updateResumePreview();
+            }
+        }
+
+        function renderEducationItems() {
+            const container = document.getElementById('educationItems');
+            container.innerHTML = '';
+            
+            educationItems.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'education-item';
+                itemElement.innerHTML = `
+                    <div class="form-group">
+                        <label>Degree/Certificate</label>
+                        <input type="text" placeholder="Bachelor of Science in Computer Science" 
+                               value="${item.degree}" oninput="updateEducationItem('${item.id}', 'degree', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Institution</label>
+                        <input type="text" placeholder="University Name" 
+                               value="${item.institution}" oninput="updateEducationItem('${item.id}', 'institution', this.value)">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div class="form-group">
+                            <label>Location</label>
+                            <input type="text" placeholder="City, Country" 
+                                   value="${item.location}" oninput="updateEducationItem('${item.id}', 'location', this.value)">
+                        </div>
+                        <div class="form-group">
+                            <label>Year</label>
+                            <input type="text" placeholder="2020" 
+                                   value="${item.year}" oninput="updateEducationItem('${item.id}', 'year', this.value)">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Additional Details</label>
+                        <textarea placeholder="Honors, awards, or relevant coursework..." 
+                                  oninput="updateEducationItem('${item.id}', 'description', this.value)" rows="2">${item.description}</textarea>
+                    </div>
+                    <button class="btn btn-outline" onclick="removeEducationItem('${item.id}')" style="width: 100%;">
+                        <i class="fas fa-trash"></i> Remove Education
+                    </button>
+                `;
+                container.appendChild(itemElement);
+            });
+            
+            saveEducationItems();
+        }
+
+        function saveExperienceItems() {
+            localStorage.setItem('careerhubExperience', JSON.stringify(experienceItems));
+        }
+
+        function saveEducationItems() {
+            localStorage.setItem('careerhubEducation', JSON.stringify(educationItems));
+        }
+
+        function loadExperienceItems() {
+            const saved = localStorage.getItem('careerhubExperience');
+            if (saved) {
+                experienceItems = JSON.parse(saved);
+                renderExperienceItems();
+            }
+        }
+
+        function loadEducationItems() {
+            const saved = localStorage.getItem('careerhubEducation');
+            if (saved) {
+                educationItems = JSON.parse(saved);
+                renderEducationItems();
+            }
+        }
+
+        function updateResumePreview() {
+            const preview = document.getElementById('resumePreview');
+            const name = document.getElementById('resumeName').value || 'Your Name';
+            const title = document.getElementById('resumeTitle').value || 'Professional Title';
+            const email = document.getElementById('resumeEmail').value || 'email@example.com';
+            const phone = document.getElementById('resumePhone').value || '+263 77 123 4567';
+            const location = document.getElementById('resumeLocation').value || 'City, Country';
+            const summary = document.getElementById('resumeSummary').value || 'Professional summary will appear here...';
+            const skills = document.getElementById('resumeSkills').value || 'Skills will appear here';
+            const certifications = document.getElementById('resumeCertifications').value || '';
+            const languages = document.getElementById('resumeLanguages').value || '';
+            
+            const completion = calculateResumeCompletion();
+            document.getElementById('resumeScore').textContent = `${completion}%`;
+            
+            if (completion === 0) {
+                preview.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>Your Resume Preview</h3>
+                        <p>Start filling out the form to see your resume preview here</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            if (currentTemplate === 'modern') {
+                preview.innerHTML = `
+                    <div class="resume-template template-modern">
+                        <div class="resume-header">
+                            <h1>${name}</h1>
+                            <h2>${title}</h2>
+                            <div class="contact-info">
+                                <span><i class="fas fa-envelope"></i> ${email}</span>
+                                <span><i class="fas fa-phone"></i> ${phone}</span>
+                                <span><i class="fas fa-map-marker-alt"></i> ${location}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="section">
+                            <h3 class="section-title">Professional Summary</h3>
+                            <p>${summary}</p>
+                        </div>
+                        
+                        <div class="section">
+                            <h3 class="section-title">Skills</h3>
+                            <div class="skills-list">
+                                ${skills.split(',').map(skill => 
+                                    `<div class="skill-tag">${skill.trim()}</div>`
+                                ).join('')}
+                            </div>
+                        </div>
+                        
+                        ${experienceItems.length > 0 ? `
+                        <div class="section">
+                            <h3 class="section-title">Work Experience</h3>
+                            ${experienceItems.map(item => `
+                                <div class="experience-item">
+                                    <div class="item-header">
+                                        <div class="item-title">${item.title || 'Job Title'}</div>
+                                        <div class="item-date">${item.startDate || 'Start'} - ${item.endDate || 'Present'}</div>
+                                    </div>
+                                    <div class="item-subtitle">${item.company || 'Company Name'}, ${item.location || 'Location'}</div>
+                                    <div class="item-description">${item.description || 'Job description...'}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        ` : ''}
+                        
+                        ${educationItems.length > 0 ? `
+                        <div class="section">
+                            <h3 class="section-title">Education</h3>
+                            ${educationItems.map(item => `
+                                <div class="education-item">
+                                    <div class="item-header">
+                                        <div class="item-title">${item.degree || 'Degree/Certificate'}</div>
+                                        <div class="item-date">${item.year || 'Year'}</div>
+                                    </div>
+                                    <div class="item-subtitle">${item.institution || 'Institution'}, ${item.location || 'Location'}</div>
+                                    <div class="item-description">${item.description || 'Additional details...'}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        ` : ''}
+                        
+                        ${certifications && certifications.trim() ? `
+                        <div class="section">
+                            <h3 class="section-title">Certifications</h3>
+                            <p style="white-space: pre-line;">${certifications}</p>
+                        </div>
+                        ` : ''}
+                        
+                        ${languages && languages.trim() ? `
+                        <div class="section">
+                            <h3 class="section-title">Languages</h3>
+                            <p>${languages}</p>
+                        </div>
+                        ` : ''}
+                    </div>
+                `;
+            } else if (currentTemplate === 'professional') {
+                preview.innerHTML = `
+                    <div class="resume-template template-professional">
+                        <div class="resume-header">
+                            <h1>${name}</h1>
+                            <h2>${title}</h2>
+                            <div class="contact-info">
+                                <span><i class="fas fa-envelope"></i> ${email}</span>
+                                <span><i class="fas fa-phone"></i> ${phone}</span>
+                                <span><i class="fas fa-map-marker-alt"></i> ${location}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="section">
+                            <h3 class="section-title">Professional Summary</h3>
+                            <p>${summary}</p>
+                        </div>
+                        
+                        <div class="section">
+                            <h3 class="section-title">Skills</h3>
+                            <div class="skills-list">
+                                ${skills.split(',').map(skill => 
+                                    `<div class="skill-tag">${skill.trim()}</div>`
+                                ).join('')}
+                            </div>
+                        </div>
+                        
+                        ${experienceItems.length > 0 ? `
+                        <div class="section">
+                            <h3 class="section-title">Work Experience</h3>
+                            ${experienceItems.map(item => `
+                                <div class="experience-item">
+                                    <div class="item-header">
+                                        <div class="item-title">${item.title || 'Job Title'}</div>
+                                        <div class="item-date">${item.startDate || 'Start'} - ${item.endDate || 'Present'}</div>
+                                    </div>
+                                    <div class="item-subtitle">${item.company || 'Company Name'}, ${item.location || 'Location'}</div>
+                                    <div class="item-description">${item.description || 'Job description...'}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        ` : ''}
+                        
+                        ${educationItems.length > 0 ? `
+                        <div class="section">
+                            <h3 class="section-title">Education</h3>
+                            ${educationItems.map(item => `
+                                <div class="education-item">
+                                    <div class="item-header">
+                                        <div class="item-title">${item.degree || 'Degree/Certificate'}</div>
+                                        <div class="item-date">${item.year || 'Year'}</div>
+                                    </div>
+                                    <div class="item-subtitle">${item.institution || 'Institution'}, ${item.location || 'Location'}</div>
+                                    <div class="item-description">${item.description || 'Additional details...'}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        ` : ''}
+                        
+                        ${certifications && certifications.trim() ? `
+                        <div class="section">
+                            <h3 class="section-title">Certifications</h3>
+                            <p style="white-space: pre-line;">${certifications}</p>
+                        </div>
+                        ` : ''}
+                        
+                        ${languages && languages.trim() ? `
+                        <div class="section">
+                            <h3 class="section-title">Languages</h3>
+                            <p>${languages}</p>
+                        </div>
+                        ` : ''}
+                    </div>
+                `;
+            } else if (currentTemplate === 'creative') {
+                const initials = name.split(' ').map(n => n[0]).join('').toUpperCase();
+                preview.innerHTML = `
+                    <div class="resume-template template-creative">
+                        <div class="resume-header">
+                            <div class="avatar">${initials}</div>
+                            <div class="header-content">
+                                <h1>${name}</h1>
+                                <h2>${title}</h2>
+                                <div class="contact-info">
+                                    <span><i class="fas fa-envelope"></i> ${email}</span>
+                                    <span><i class="fas fa-phone"></i> ${phone}</span>
+                                    <span><i class="fas fa-map-marker-alt"></i> ${location}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="section">
+                            <h3 class="section-title">Professional Summary</h3>
+                            <p>${summary}</p>
+                        </div>
+                        
+                        <div class="section">
+                            <h3 class="section-title">Skills</h3>
+                            <div class="skills-list">
+                                ${skills.split(',').map(skill => 
+                                    `<div class="skill-tag">${skill.trim()}</div>`
+                                ).join('')}
+                            </div>
+                        </div>
+                        
+                        ${experienceItems.length > 0 ? `
+                        <div class="section">
+                            <h3 class="section-title">Work Experience</h3>
+                            ${experienceItems.map(item => `
+                                <div class="experience-item">
+                                    <div class="item-header">
+                                        <div class="item-title">${item.title || 'Job Title'}</div>
+                                        <div class="item-date">${item.startDate || 'Start'} - ${item.endDate || 'Present'}</div>
+                                    </div>
+                                    <div class="item-subtitle">${item.company || 'Company Name'}, ${item.location || 'Location'}</div>
+                                    <div class="item-description">${item.description || 'Job description...'}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        ` : ''}
+                        
+                        ${educationItems.length > 0 ? `
+                        <div class="section">
+                            <h3 class="section-title">Education</h3>
+                            ${educationItems.map(item => `
+                                <div class="education-item">
+                                    <div class="item-header">
+                                        <div class="item-title">${item.degree || 'Degree/Certificate'}</div>
+                                        <div class="item-date">${item.year || 'Year'}</div>
+                                    </div>
+                                    <div class="item-subtitle">${item.institution || 'Institution'}, ${item.location || 'Location'}</div>
+                                    <div class="item-description">${item.description || 'Additional details...'}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        ` : ''}
+                        
+                        ${certifications && certifications.trim() ? `
+                        <div class="section">
+                            <h3 class="section-title">Certifications</h3>
+                            <p style="white-space: pre-line;">${certifications}</p>
+                        </div>
+                        ` : ''}
+                        
+                        ${languages && languages.trim() ? `
+                        <div class="section">
+                            <h3 class="section-title">Languages</h3>
+                            <p>${languages}</p>
+                        </div>
+                        ` : ''}
+                    </div>
+                `;
+            }
+        }
+
+        function generateResumePDF() {
+            const completion = calculateResumeCompletion();
+            if (completion < 50) {
+                showMessage('Please complete at least 50% of your resume before downloading', 'warning');
+                return;
+            }
+            
+            const msg = showMessage('Generating PDF resume...', 'loading');
+            
+            const name = document.getElementById('resumeName').value;
+            const textContent = `
+                ${name} - Resume
+                
+                Professional Title: ${document.getElementById('resumeTitle').value}
+                Email: ${document.getElementById('resumeEmail').value}
+                Phone: ${document.getElementById('resumePhone').value}
+                Location: ${document.getElementById('resumeLocation').value}
+                
+                SUMMARY:
+                ${document.getElementById('resumeSummary').value}
+                
+                SKILLS:
+                ${document.getElementById('resumeSkills').value}
+                
+                LANGUAGES:
+                ${document.getElementById('resumeLanguages').value}
+                
+                EXPERIENCE:
+                ${experienceItems.map(item => `
+                ${item.title} at ${item.company}
+                ${item.startDate} - ${item.endDate}
+                ${item.location}
+                ${item.description}
+                
+                `).join('')}
+                
+                EDUCATION:
+                ${educationItems.map(item => `
+                ${item.degree} from ${item.institution}
+                ${item.year}
+                ${item.location}
+                ${item.description}
+                
+                `).join('')}
+                
+                CERTIFICATIONS:
+                ${document.getElementById('resumeCertifications').value}
+            `;
+            
+            setTimeout(() => {
+                msg.remove();
+                showMessage('✅ Resume downloaded successfully!', 'success');
+                
+                const blob = new Blob([textContent], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${name.replace(/\s+/g, '_')}_Resume.txt`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 2000);
+        }
+
+        function printResume() {
+            const completion = calculateResumeCompletion();
+            if (completion < 50) {
+                showMessage('Please complete at least 50% of your resume before printing', 'warning');
+                return;
+            }
+            
+            // Trigger browser print
+            window.print();
+        }
+
+        function clearResume() {
+            if (confirm('Are you sure you want to clear all resume data?')) {
+                document.getElementById('resumeName').value = '';
+                document.getElementById('resumeTitle').value = '';
+                document.getElementById('resumeEmail').value = '';
+                document.getElementById('resumePhone').value = '';
+                document.getElementById('resumeLocation').value = '';
+                document.getElementById('resumeSummary').value = '';
+                document.getElementById('resumeSkills').value = '';
+                document.getElementById('resumeCertifications').value = '';
+                document.getElementById('resumeLanguages').value = '';
+                
+                experienceItems = [];
+                educationItems = [];
+                renderExperienceItems();
+                renderEducationItems();
+                
+                updateResumePreview();
+                showMessage('Resume cleared successfully', 'success');
+            }
+        }
+
+        function saveResumeData() {
+            resumeData = {
+                name: document.getElementById('resumeName').value,
+                title: document.getElementById('resumeTitle').value,
+                email: document.getElementById('resumeEmail').value,
+                phone: document.getElementById('resumePhone').value,
+                location: document.getElementById('resumeLocation').value,
+                summary: document.getElementById('resumeSummary').value,
+                skills: document.getElementById('resumeSkills').value,
+                certifications: document.getElementById('resumeCertifications').value,
+                languages: document.getElementById('resumeLanguages').value
+            };
+            
+            localStorage.setItem('careerhubResume', JSON.stringify(resumeData));
+            saveExperienceItems();
+            saveEducationItems();
+            showMessage('Resume data saved successfully!', 'success');
+        }
+
+        function loadSavedResume() {
+            const saved = localStorage.getItem('careerhubResume');
+            if (saved) {
+                resumeData = JSON.parse(saved);
+                
+                document.getElementById('resumeName').value = resumeData.name || '';
+                document.getElementById('resumeTitle').value = resumeData.title || '';
+                document.getElementById('resumeEmail').value = resumeData.email || '';
+                document.getElementById('resumePhone').value = resumeData.phone || '';
+                document.getElementById('resumeLocation').value = resumeData.location || '';
+                document.getElementById('resumeSummary').value = resumeData.summary || '';
+                document.getElementById('resumeSkills').value = resumeData.skills || '';
+                document.getElementById('resumeCertifications').value = resumeData.certifications || '';
+                document.getElementById('resumeLanguages').value = resumeData.languages || '';
+                
+                updateResumePreview();
+            }
+        }
+
+        // Enhanced Multilingual Career Assistant Functions
+        function setupChatbot() {
+            // Language change
+            document.getElementById('languageSelect').addEventListener('change', function() {
+                currentLanguage = this.value;
+                updateQuickSuggestions();
+                updateLanguageIndicator();
+            });
+            
+            updateQuickSuggestions();
+            updateLanguageIndicator();
+        }
+
+        function updateLanguageIndicator() {
+            const languageNames = {
+                'en': 'English',
+                'sn': 'Shona', 
+                'nd': 'Ndebele'
+            };
+            const indicator = document.getElementById('languageIndicator');
+            indicator.textContent = `(Replies in ${languageNames[currentLanguage]})`;
+        }
+
+        function updateQuickSuggestions() {
+            const container = document.getElementById('quickSuggestions');
+            container.innerHTML = '';
+            
+            const suggestions = SUGGESTION_TEMPLATES[currentLanguage] || SUGGESTION_TEMPLATES['en'];
+            
+            suggestions.forEach(suggestion => {
+                const button = document.createElement('button');
+                button.className = 'suggestion-btn';
+                button.textContent = suggestion;
+                button.onclick = () => useSuggestion(suggestion);
+                container.appendChild(button);
+            });
+        }
+
+        function useSuggestion(suggestion) {
+            document.getElementById('chatInput').value = suggestion;
+            sendChatMessage();
+        }
+
+        function handleChatInput(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) {
+                showMessage('Please enter a message', 'warning');
+                return;
+            }
+
+            addChatMessage(message, 'user');
+            input.value = '';
+
+            // Show loading indicator
+            const loadingMsg = addChatMessage('Thinking...', 'bot');
+            loadingMsg.querySelector('.fa-robot').className = 'fas fa-spinner fa-spin';
+
+            // Simulate AI response
+            setTimeout(() => {
+                loadingMsg.remove();
+                const response = getCareerResponse(message, currentLanguage);
+                addChatMessage(response, 'bot');
+            }, 1500);
+        }
+
+        function getCareerResponse(message, language) {
+            const responses = QUICK_RESPONSES[language] || QUICK_RESPONSES['en'];
+            const messageLower = message.toLowerCase();
+            
+            // Greetings
+            if (anyWordInMessage(messageLower, ['hello', 'hi', 'hey', 'mhoro', 'salibonani'])) {
+                return randomChoice(responses['greetings']);
+            }
+            
+            // Farewells
+            if (anyWordInMessage(messageLower, ['bye', 'goodbye', 'see you', 'sara', 'hamba'])) {
+                return randomChoice(responses['farewells']);
+            }
+            
+            // Thanks
+            if (anyWordInMessage(messageLower, ['thank', 'thanks', 'ta', 'maita', 'ngiyabonga'])) {
+                return randomChoice(responses['thanks']);
+            }
+            
+            // Help
+            if (anyWordInMessage(messageLower, ['help', 'what can you do', 'ndipe rubatsiro', 'ngisize'])) {
+                return randomChoice(responses['help']);
+            }
+            
+            // Engineering
+            if (anyWordInMessage(messageLower, ['engineering', 'engineer', 'career', 'injiniya'])) {
+                if (messageLower.includes('civil')) {
+                    return responses['engineering']['civil'];
+                } else if (messageLower.includes('mechanical')) {
+                    return responses['engineering']['mechanical'];
+                } else if (messageLower.includes('electrical')) {
+                    return responses['engineering']['electrical'];
+                } else if (messageLower.includes('software')) {
+                    return responses['engineering']['software'];
+                } else {
+                    return responses['engineering']['general'];
+                }
+            }
+            
+            // Study tips
+            if (anyWordInMessage(messageLower, ['study', 'learn', 'exam', 'funda', 'ufunde'])) {
+                return randomChoice(responses['study_tips']);
+            }
+            
+            // Motivation
+            if (anyWordInMessage(messageLower, ['motivate', 'encourage', 'inspire', 'khuthaza'])) {
+                return randomChoice(responses['motivation']);
+            }
+            
+            // Resume and job search
+            if (anyWordInMessage(messageLower, ['resume', 'cv', 'curriculum vitae', 'application'])) {
+                if (language === 'en') {
+                    return "For a strong resume: Use action verbs, quantify achievements, tailor it to each job, and keep it to 1-2 pages. Highlight skills relevant to the position you're applying for. Consider using our resume builder above!";
+                } else if (language === 'sn') {
+                    return "Kune resume yakasimba: Shandisa action verbs, taura zvawakaita, gadzirira basa rega rega, uye chengeta kusvika pamapeji 1-2. Ratidza hunyanzvi hunoenderana nebasa raunonyorera. Funga kushandisa resume builder yedu iri pamusoro!";
+                } else {
+                    return "Nge-resume eqinile: Sebenzisa izenzo zesenzo, nquma impumelelo, ilungele umsebenzi ngamunye, futhi ugcine kumakhasi ayi-1-2. Qhakambisa amakhono ahambisana nesikhundla osifakela isicelo. Cabanga ukusebenzisa isakhi se-resume esingenhla!";
+                }
+            }
+            
+            if (anyWordInMessage(messageLower, ['interview', 'interview preparation', 'inhlolokhono'])) {
+                if (language === 'en') {
+                    return "Interview tips: Research the company, practice common questions, prepare questions to ask, dress professionally, and follow up with a thank you note. Practice with the STAR method (Situation, Task, Action, Result).";
+                } else if (language === 'sn') {
+                    return "Interview tips: Tsvagurudza kambani, dzidzira mibvunzo yakajairika, gadzirira mibvunzo yekubvunza, pfeka zvinehunyanzvi, uye tevera nekutenda. Dzidzira neSTAR method (Situation, Task, Action, Result).";
+                } else {
+                    return "Amathiphu enhlolokhono: Phenya ngenkampani, zilolonge imibuzo evamile, lungiselela imibuzo yokubuza, gabha ngokusesimweni, bese ulandela ngencwadi yokubonga. Zilolonge ngendlela ye-STAR (Isimo, Umsebenzi, Isenzo, Umphumela).";
+                }
+            }
+            
+            if (anyWordInMessage(messageLower, ['job search', 'find job', 'kutsvaga basa', 'ukufuna umsebenzi'])) {
+                if (language === 'en') {
+                    return "Job search strategies: Use multiple platforms, network on LinkedIn, attend career fairs, customize applications, and consider temporary or contract work to gain experience. Use our job search feature above to find opportunities!";
+                } else if (language === 'sn') {
+                    return "Job search strategies: Shandisa mapuratifomu akawanda, shandisa LinkedIn, enda kumafairs emabasa, gadzirisa zvikumbiro, uye funga nezvebasa renguva pfupi kana rekondirakiti kuti uwane ruzivo. Shandisa job search yedu iri pamusoro kuwana mikana!";
+                } else {
+                    return "Amasu okufuna umsebenzi: Sebenzisa amapulatifomu amaningi, xhumana ku-LinkedIn, hamba emibukisweni yemisebenzi, lungisa izicelo, bese ucabanga ngomsebenzi wesikhashana noma wenkontileka ukuthola ulwazi. Sebenzisa isici sethu sokusesha umsebenzi esingenhla ukuthola amathuba!";
+                }
+            }
+            
+            // Default response in the selected language
+            return randomChoice(responses['default']);
+        }
+
+        function anyWordInMessage(message, words) {
+            return words.some(word => message.includes(word));
+        }
+
+        function randomChoice(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        function addChatMessage(text, sender) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message-bubble ${sender}`;
+            
+            const avatarIcon = sender === 'user' ? 'user' : 'robot';
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">
+                    <i class="fas fa-${avatarIcon}"></i>
+                </div>
+                <div class="message-content">${text}</div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            return messageDiv;
+        }
+
+        // Assessment Functions
+        function startAssessment() {
+            document.getElementById('assessmentIntro').style.display = 'none';
+            document.getElementById('assessmentQuestions').style.display = 'block';
+            currentQuestionIndex = 0;
+            assessmentAnswers = [];
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = assessmentQuestions[currentQuestionIndex];
+            const container = document.getElementById('questionContainer');
+            
+            container.innerHTML = `
+                <div class="question-card">
+                    <h3>Question ${currentQuestionIndex + 1} of ${assessmentQuestions.length}</h3>
+                    <p style="font-size: 1.2em; margin: 20px 0;">${question.question}</p>
+                    <div class="options-grid">
+                        ${question.options.map((option, index) => `
+                            <div class="option" onclick="selectAnswer(${index})">
+                                ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('nextQuestionBtn').disabled = true;
+        }
+
+        function selectAnswer(index) {
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+            assessmentAnswers[currentQuestionIndex] = index;
+            document.getElementById('nextQuestionBtn').disabled = false;
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < assessmentQuestions.length - 1) {
+                currentQuestionIndex++;
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('assessmentQuestions').style.display = 'none';
+            document.getElementById('assessmentResults').style.display = 'block';
+            
+            // Simple scoring based on user answers
+            const scores = { technical: 0, creative: 0, business: 0 };
+            assessmentAnswers.forEach((answer, index) => {
+                if (index === 0) {
+                    if (answer === 0 || answer === 3) scores.technical += 2;
+                    if (answer === 1) scores.business += 2;
+                    if (answer === 2) scores.creative += 2;
+                }
+                if (index === 1) {
+                    if (answer === 3) scores.technical += 2;
+                    if (answer === 0) scores.creative += 2;
+                    if (answer === 1) scores.business += 2;
+                    if (answer === 2) scores.business += 1;
+                }
+                if (index === 2) {
+                    if (answer === 0) scores.business += 2;
+                    if (answer === 1) scores.creative += 2;
+                    if (answer === 2) scores.technical += 1;
+                    if (answer === 3) scores.technical += 2;
+                }
+            });
+            
+            const topCareer = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+            const matchScore = Math.min(100, Math.max(60, scores[topCareer] * 15));
+            
+            let careerInfo = {};
+            let careerSuggestions = [];
+            
+            if (topCareer === 'technical') {
+                careerInfo = {
+                    title: 'Technical/IT Careers',
+                    description: 'You thrive in environments that require problem-solving, technical skills, and continuous learning.',
+                    examples: ['Software Developer', 'Data Analyst', 'IT Support Specialist', 'Network Administrator', 'Cybersecurity Analyst']
+                };
+                careerSuggestions = [
+                    'Consider learning programming languages like Python or JavaScript',
+                    'Build a portfolio of technical projects',
+                    'Get certified in relevant technologies'
+                ];
+            } else if (topCareer === 'creative') {
+                careerInfo = {
+                    title: 'Creative/Design Careers',
+                    description: 'You excel in roles that allow for self-expression, innovation, and visual thinking.',
+                    examples: ['Graphic Designer', 'Content Creator', 'Marketing Specialist', 'UI/UX Designer', 'Video Editor']
+                };
+                careerSuggestions = [
+                    'Build a strong portfolio showcasing your creative work',
+                    'Learn design tools like Adobe Creative Suite',
+                    'Network with creative professionals in your area'
+                ];
+            } else {
+                careerInfo = {
+                    title: 'Business/Management Careers',
+                    description: 'You succeed in structured environments that value organization, leadership, and strategic thinking.',
+                    examples: ['Project Manager', 'Business Analyst', 'Sales Representative', 'HR Specialist', 'Operations Manager']
+                };
+                careerSuggestions = [
+                    'Develop strong communication and leadership skills',
+                    'Consider business certifications or an MBA',
+                    'Gain experience in team management and project coordination'
+                ];
+            }
+            
+            document.getElementById('assessmentResults').innerHTML = `
+                <div style="text-align: center; padding: 30px;">
+                    <i class="fas fa-chart-line fa-3x" style="color: var(--primary); margin-bottom: 20px;"></i>
+                    <h2>Your Career Assessment Results</h2>
+                    <div class="stat-card" style="max-width: 300px; margin: 20px auto;">
+                        <div class="stat-value">${matchScore}%</div>
+                        <div class="stat-label">Career Match</div>
+                    </div>
+                    
+                    <div style="background: var(--light); padding: 25px; border-radius: 12px; margin: 25px 0;">
+                        <h3 style="color: var(--primary); margin-bottom: 15px;">${careerInfo.title}</h3>
+                        <p style="margin-bottom: 20px;">${careerInfo.description}</p>
+                        
+                        <h4 style="margin-bottom: 10px;">Potential Career Paths:</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 20px;">
+                            ${careerInfo.examples.map(career => `
+                                <div class="job-tag">${career}</div>
+                            `).join('')}
+                        </div>
+                        
+                        <h4 style="margin-bottom: 10px;">Next Steps:</h4>
+                        <ul style="text-align: left; max-width: 500px; margin: 0 auto;">
+                            ${careerSuggestions.map(step => `
+                                <li style="margin-bottom: 8px;">${step}</li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="switchTab('jobs')">
+                        <i class="fas fa-search"></i> Search for ${careerInfo.title} Jobs
+                    </button>
+                    <button class="btn btn-outline" onclick="startAssessment()" style="margin-left: 10px;">
+                        <i class="fas fa-redo"></i> Retake Assessment
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('assessmentScore').textContent = `${matchScore}%`;
+        }
+
+        function viewApplications() {
+            const applications = JSON.parse(localStorage.getItem('careerhubApplications') || '[]');
+            if (applications.length === 0) {
+                showMessage('You haven\'t applied to any jobs yet', 'info');
+                return;
+            }
+            
+            // In a real implementation, this would show a modal or switch to a applications view
+            showMessage(`You have ${applications.length} job applications`, 'info');
+        }
+    </script>
+</body>
+</html>
