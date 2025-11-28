@@ -16,6 +16,7 @@ Follow the steps below to set up and run this project on your local machine.
 ### **Step 1: Install Git**
 Download Git here: https://git-scm.com/downloads  
 Complete the installation using default settings.
+get the app online: https://rachel-png-coder.github.io/Careerai/
 
 ### **Step 2: Open a Terminal**
 You can use:
