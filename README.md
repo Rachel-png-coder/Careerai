@@ -43,3 +43,15 @@ git commit -m "Description of changes"
 git push origin feature/your-feature-name
 
 ##get this app online on https://rachel-png-coder.github.io/Careerai/
+
+
+
+
+**Steps to deploy**
+1. open repository
+2. go to settings
+3. scroll to pages
+4. Under Source, choose:
+Branch: main
+Folder: / (root)
+5. Click Save
