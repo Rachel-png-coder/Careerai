@@ -40,3 +40,5 @@ make changes in vscode and the test using live server
 git add .
 git commit -m "Description of changes"
 git push origin feature/your-feature-name
+
+##get this app online on https://rachel-png-coder.github.io/Careerai/
